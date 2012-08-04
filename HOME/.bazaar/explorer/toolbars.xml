@@ -1,0 +1,17 @@
+<folder title="My Toolbars">
+    <!--
+    This file contains toolbar definitions, one per folder.
+    Folder titles are used as follows:
+
+    * toolset:prefix - all toolbars start with these actions
+    * toolset:suffix - all toolbars end with these actions
+    * toolset:sss - a set of items that can be included in toolbars
+    * kind:kkk - the toolbar for locations with kind kkk
+    * bbb - a toolbar called bbb
+    
+    Most toolbars are lists of actions, toolsets and separators.
+    You may use custom tools and folders as well. See
+    http://doc.bazaar.canonical.com/explorer/en/tutorials/customization.html
+    for the list of available action and kind names.
+    -->
+</folder>

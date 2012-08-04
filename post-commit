@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# --- Safety check
+if [ -z "$GIT_DIR" ]; then
+	echo "Don't run this script from the command line." >&2
+	echo " (if you want, you could supply GIT_DIR then run" >&2
+	echo "  $0 <ref> <oldrev> <newrev>)" >&2
+	exit 1
+fi
+
+# split into two steps for the case where HOME contains a copy of an existing
+# actual file and stow will not unstow because of conflicts
+
+# first adopt any real files that match the files in HOME
+# since we've already committed our changes, if the adopted file differs git
+# status will show that it's been modified
+echo "Stowing HOME with --adopt flag"
+stow --adopt HOME
+
+# Restow to prune any stale symlinks
+echo "Restowing HOME (to prune any stale symlinks)"
+stow -R HOME

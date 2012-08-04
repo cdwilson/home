@@ -1,0 +1,39 @@
+[user]
+	name = Christopher Wilson
+	email = cwilson@cdwilson.us
+[core]
+	editor = mate -w
+	excludesfile = /Users/cwilson/.gitignore
+	quotepath = false
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	stash-unapply = !git stash show -p | git apply -R
+	amend = commit --amend -C HEAD
+	gerrit = push origin HEAD:refs/for/master
+	prepush = log --graph --stat origin/master..
+[merge]
+	tool = meld
+	summary = true
+[diff]
+	tool = meld
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[color "diff"]
+	whitespace = red reverse
+[instaweb]
+	local = true
+	httpd = webrick
