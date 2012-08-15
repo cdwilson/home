@@ -15,8 +15,8 @@ fi
 # since we've already committed our changes, if the adopted file differs git
 # status will show that it's been modified
 echo "Stowing HOME with --adopt flag"
-stow --adopt HOME
+stow -v --adopt HOME
 
 # Restow to prune any stale symlinks
 echo "Restowing HOME (to prune any stale symlinks)"
-stow -R HOME
+stow -v -R HOME
