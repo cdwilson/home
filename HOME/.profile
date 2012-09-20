@@ -38,6 +38,7 @@ export HISTSIZE=5000
 shopt -s histappend
 
 # git-completion.bash
+source /opt/local/share/doc/git-core/contrib/completion/git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=true #... untagged(*) and staged(+) changes
 export GIT_PS1_SHOWSTASHSTATE=true #... if something is stashed($)
 export GIT_PS1_SHOWUNTRACKEDFILES=true #... untracked files(%)
