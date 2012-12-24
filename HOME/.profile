@@ -64,16 +64,16 @@ PS1_GIT_FORMAT_STRING=" [${COLOR_BLUE}%s${COLOR_RESET}]"
 # it is single quoted.
 export PS1="${PS1_USER}${PS1_AT}${PS1_HOST} ${PS1_CURDIR}"'$(__git_ps1 "'"${PS1_GIT_FORMAT_STRING}"'")\n$ '
 
-# coreutils
-# If you want to use the GNU tools by default
-# export PATH=/opt/local/libexec/gnubin/:$PATH
-
 # MacPorts Installer addition on 2011-09-25_at_16:19:49: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
+# coreutils
+# If you want to use the GNU tools by default
+# export PATH=/opt/local/libexec/gnubin/:$PATH
+
 # MacTEX http://www.tug.org/mactex/multipletexdistributions.html
-export PATH=/usr/texbin:$PATH
+# export PATH=/usr/texbin:$PATH
 
 # rvm
 [[ -s "/Users/cwilson/.rvm/scripts/rvm" ]] && source "/Users/cwilson/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
