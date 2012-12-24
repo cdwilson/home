@@ -1,6 +1,5 @@
 [user]
 	name = Christopher Wilson
-	email = cwilson@cdwilson.us
 [core]
 	editor = mate -w
 	excludesfile = /Users/cwilson/.gitignore
