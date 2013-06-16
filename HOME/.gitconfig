@@ -21,10 +21,10 @@
 	gerrit = push origin HEAD:refs/for/master
 	prepush = log --graph --stat origin/master..
 [merge]
-	tool = meld
+	tool = Kaleidoscope
 	summary = true
 [diff]
-	tool = meld
+	tool = Kaleidoscope
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -36,3 +36,14 @@
 [instaweb]
 	local = true
 	httpd = webrick
+[push]
+	default = simple
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[mergetool]
+	prompt = false
