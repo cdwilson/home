@@ -83,8 +83,9 @@ export PIP_REQUIRE_VIRTUALENV=true
 [[ -s "/usr/local/bin/virtualenvwrapper.sh" ]] && source "/usr/local/bin/virtualenvwrapper.sh"
 alias v=workon
 alias v.deactivate=deactivate
-alias v.mk='mkvirtualenv --distribute'
-alias v.mk_withsetuptools='mkvirtualenv'
+alias v.mk='mkvirtualenv'
+alias v.mk_withsetuptools='mkvirtualenv --setuptools'
+alias v.mk_withdistribute='mkvirtualenv --distribute'
 alias v.mk_withsitepackages='mkvirtualenv --system-site-packages'
 alias v.rm=rmvirtualenv
 alias v.switch=workon
