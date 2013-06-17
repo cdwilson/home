@@ -2,10 +2,6 @@
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 # Finished adapting your PATH environment variable for use with MacPorts.
 
-# Make sure that the correct pip command is used for the currently selected python
-# see http://stackoverflow.com/questions/12557114/macports-and-the-bash-path
-export PATH=/opt/local/Library/Frameworks/Python.framework/Versions/Current/bin:$PATH
-
 # coreutils
 # If you want to use the GNU tools by default
 # export PATH=/opt/local/libexec/gnubin/:$PATH
