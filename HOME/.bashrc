@@ -58,6 +58,7 @@ alias hi='history | tail -20'
 alias la="ls -a" # list all, includes dot files
 alias ll="ls -l" # long list, excludes dot files
 alias lla="ls -la" # long list all, includes dot files
+alias ppath="echo \$PATH | tr ':' '\n'"
 
 # ----------------------------------------------------------------------
 # Colors
