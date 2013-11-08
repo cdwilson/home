@@ -1,0 +1,3 @@
+[helpers]
+diff-cmd = ksdiff
+merge-tool-cmd = ksdiff
