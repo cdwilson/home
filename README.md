@@ -23,11 +23,11 @@ emulate or fork for your own purposes.
 
 hooks
 -----
-For convenience, there is also a Git post-commit hook supplied to run Stow
+For convenience, there is also a Git `post-commit` hook supplied to run Stow
 automatically after checking in changes to the repository. This makes sure
 that the symbolic links in `$HOME` are kept up to date and any new files are
 actually moved into the repository (as opposed to accidentally leaving a copy
-in `$HOME` and a separate copy in the repository). The post-commit hook runs
+in `$HOME` and a separate copy in the repository). The `post-commit` hook runs
 Stow in two passes.
 
 First, it "stows" the repository `HOME` directory into the user's `$HOME`
@@ -44,7 +44,7 @@ setting up a new system, if you're not careful, it has the potential to
 overwrite any unstaged changes in the repository. If you don't want this
 behavior simply remove `--adopt` from the command in the hook file.
 
-Second, Stow is run with the `-R` option. This causes Stow to
+Second, Stow is re-run with the `-R` option. This causes Stow to
 "restow" all the files in `HOME` ensuring any stale links are pruned.
 
 setup and usage
@@ -52,8 +52,37 @@ setup and usage
 
 * install stow (make sure to use a recent version that supports `--adopt`)
 * checkout this repository as `$HOME/.home`
-* copy post-commit hook to `$HOME/.home/.git/hooks/post-commit`
-* copy files you want tracked into `$HOME/.home/HOME/` and when you commit
+* make `post-commit` hook executable and copy it to `$HOME/.home/.git/hooks/post-commit`
+* use stow to "adopt" any existing files in the repository
+* copy new files you want tracked into `$HOME/.home/HOME/` and when you commit
   they will be automatically "adopted" and converted into symlinks
 * edit your files in `$HOME/.home/HOME/` and remember to commit to force stow
   to update any symbolic links that have changed!
+
+example
+-------
+
+    # change to $HOME dir
+	cd ~
+	# checkout home.git as .home
+    git clone git@github.com:cdwilson/home.git .home
+	# change directory to .home
+	cd .home
+	# add execute permissions to post-commit hook
+	chmod +x post-commit
+	# copy post-commit hook into hooks dir so that it will be run after each
+	# commit to this repository
+	cp post-commit .git/hooks/
+	# "adopt" any plain files that are in $HOME, but not yet in the repository,
+	# by moving them into .home/HOME and replacing them with a symlink
+	stow -v --adopt HOME
+	# restow to prune any stale symlinks
+	stow -v -R HOME
+	# run `git status` to view any changes between the newly adopted files and
+	# the ones checked into the repository
+	git status
+	# add any changes
+	git add <your changed files go here>
+	# commit your changes
+	git commit -m "these are my changes"
+	# You're done! post-commit will automatically update the symlinks
