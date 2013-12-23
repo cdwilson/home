@@ -62,27 +62,29 @@ setup and usage
 example
 -------
 
-    # change to $HOME dir
-	cd ~
-	# checkout home.git as .home
-    git clone git@github.com:cdwilson/home.git .home
-	# change directory to .home
-	cd .home
-	# add execute permissions to post-commit hook
-	chmod +x post-commit
-	# copy post-commit hook into hooks dir so that it will be run after each
-	# commit to this repository
-	cp post-commit .git/hooks/
-	# "adopt" any plain files that are in $HOME, but not yet in the repository,
-	# by moving them into .home/HOME and replacing them with a symlink
-	stow -v --adopt HOME
-	# restow to prune any stale symlinks
-	stow -v -R HOME
-	# run `git status` to view any changes between the newly adopted files and
-	# the ones checked into the repository
-	git status
-	# add any changes
-	git add <your changed files go here>
-	# commit your changes
-	git commit -m "these are my changes"
-	# You're done! post-commit will automatically update the symlinks
+```bash
+# change to $HOME dir
+cd ~
+# checkout home.git as .home
+git clone git@github.com:cdwilson/home.git .home
+# change directory to .home
+cd .home
+# add execute permissions to post-commit hook
+chmod +x post-commit
+# copy post-commit hook into hooks dir so that it will be run after each
+# commit to this repository
+cp post-commit .git/hooks/
+# "adopt" any plain files that are in $HOME, but not yet in the repository,
+# by moving them into .home/HOME and replacing them with a symlink
+stow -v --adopt HOME
+# restow to prune any stale symlinks
+stow -v -R HOME
+# run `git status` to view any changes between the newly adopted files and
+# the ones checked into the repository
+git status
+# add any changes
+git add <your changed files go here>
+# commit your changes
+git commit -m "these are my changes"
+# You're done! post-commit will automatically update the symlinks
+```
