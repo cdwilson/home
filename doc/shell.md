@@ -20,13 +20,13 @@ When Bash is invoked, it reads and executes commands from its startup files to c
 
 There are two conditions that determine which startup files are read (or ignored) when the shell is started:
 
-Login shell
-: - first character of argument zero is a `-`
-: - started with the `--login` option
+*Login shell*
+- first character of argument zero is a `-`
+- started with the `--login` option
 
-Interactive shell
-: - started without non-option arguments and without the `-c option`, whose standard input and error are both connected  to terminals
-: - one started with the -i option
+*Interactive shell*
+- started without non-option arguments and without the `-c option`, whose standard input and error are both connected  to terminals
+- one started with the -i option
 
 Said very simply, an _interactive shell_ is one you type commands into, and the shell you use to log into the computer is an _interactive login shell_.  
 
