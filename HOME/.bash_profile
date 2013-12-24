@@ -6,7 +6,7 @@ if [ -r $HOME/.profile ]; then
 fi
 
 # source any extra bash login files in .bash_profile.d
-if [ -d $HOME/.bash_prifile.d ]; then
+if [ -d $HOME/.bash_profile.d ]; then
     for file in $HOME/.bash_profile.d/*.bash; do
         if [ -r $file ]; then
             . $file
