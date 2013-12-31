@@ -1,4 +1,4 @@
-# The personal initialization file, executed for bash login shells
+# The Bash personal initialization file, executed for bash login shells
 
 # source Bourne compatible .profile first 
 if [ -r $HOME/.profile ]; then

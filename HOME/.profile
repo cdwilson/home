@@ -1,4 +1,4 @@
-# The personal initialization file, executed for login shells
+# The Bourne (sh) personal initialization file, executed for login shells
 
 # ----------------------------------------------------------------------
 # .profile.d
@@ -15,11 +15,11 @@ if [ -d $HOME/.profile.d ]; then
 fi
 
 # ----------------------------------------------------------------------
-# User PATH
+# User paths
 # ----------------------------------------------------------------------
 
 # ~/bin
-PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # ~/share/man
-MANPATH="$HOME/share/man:$MANPATH"
+export MANPATH="$HOME/share/man:$MANPATH"

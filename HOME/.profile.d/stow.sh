@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------
 
 # System
-PATH="/stow/bin:/stow/sbin:$PATH"
+export PATH="/stow/bin:/stow/sbin:$PATH"
 
 # User
-PATH="$HOME/stow/bin:$HOME/stow/sbin:$PATH"
+export PATH="$HOME/stow/bin:$HOME/stow/sbin:$PATH"

@@ -1,5 +1,5 @@
-# The individual per-interactive-shell startup file
-# (only read by a shell that's both interactive and non-login)
+# The Bash personal interactive initialization file
+# (only read by a Bash shell that's both interactive and non-login)
 
 # shamelessly stolen from the following:
 # https://github.com/rtomayko/dotfiles/blob/rtomayko/.bashrc
@@ -13,21 +13,29 @@
 # Environment Configuration
 # ----------------------------------------------------------------------
 
-if [ -r /etc/bashrc ]; then
-    . /etc/bashrc
-fi
-
 # detect interactive shell
 case "$-" in
-    *i*) INTERACTIVE=yes ;;
-    *) unset INTERACTIVE ;;
+    *i*)
+        INTERACTIVE=yes
+        ;;
+    *)
+        return
+        ;;
 esac
 
 # detect login shell
 case "$0" in
-    -*) LOGIN=yes ;;
-    *) unset LOGIN ;;
+    -*)
+        LOGIN=yes
+        ;;
+    *)
+        unset LOGIN
+        ;;
 esac
+
+if [ -r /etc/bashrc ]; then
+    . /etc/bashrc
+fi
 
 # enable en_US locale w/ utf-8 encodings if not already configured
 : ${LANG:="en_US.UTF-8"}
@@ -37,12 +45,12 @@ esac
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
 # filename completion ignores
-FIGNORE="~:CVS:#:.pyc"
+export FIGNORE="~:CVS:#:.pyc"
 
 # history options
-HISTCONTROL=ignoreboth
-HISTFILESIZE=10000
-HISTSIZE=10000
+export HISTCONTROL=ignoreboth
+export HISTFILESIZE=10000
+export HISTSIZE=10000
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -96,7 +104,7 @@ export LS_OPTIONS='--color=auto'
 export EDITOR="/usr/local/bin/mate -w"
 
 # ----------------------------------------------------------------------
-# Prompt
+# Prompt prefix
 # ----------------------------------------------------------------------
 
 # Lion default prompt
@@ -107,7 +115,7 @@ PS1_AT="${COLOR_GREEN}@${COLOR_RESET}"
 PS1_HOST="${COLOR_GREEN}\h${COLOR_RESET}"
 PS1_CURDIR="${COLOR_YELLOW}\w${COLOR_RESET}"
 
-PS1="${PS1_USER}${PS1_AT}${PS1_HOST} ${PS1_CURDIR}\n$ "
+export PS1="${PS1_USER}${PS1_AT}${PS1_HOST} ${PS1_CURDIR}"
 
 # ----------------------------------------------------------------------
 # .bashrc.d
@@ -124,25 +132,33 @@ if [ -d $HOME/.bashrc.d ]; then
 fi
 
 # ----------------------------------------------------------------------
+# Prompt suffix
+# ----------------------------------------------------------------------
+
+# add newline and '$' to the end of the prompt after any customizations
+# have been added by the files in .bashrc.d
+export PS1="${PS1}\n$ "
+
+# ----------------------------------------------------------------------
 # Bash Completion
 # ----------------------------------------------------------------------
 
 # See http://trac.macports.org/wiki/howto/bash-completion
 
-# The port bash-completion at version 2.0 requires at least bash at version 4.1;
-# the older bash 3.2 provided by Apple with Mac OS X is not compatible anymore
-# with this version. Please make sure you are using /opt/local/bin/bash by
-# changing the preferences of your terminal accordingly. If your version of bash
-# is too old, the script above will not modify your shell environment and no
-# extended completion will be available.
+# The port bash-completion at version 2.0 requires at least bash at version
+# 4.1; the older bash 3.2 provided by Apple with Mac OS X is not compatible
+# anymore with this version. Please make sure you are using /opt/local/bin/bash
+# by changing the preferences of your terminal accordingly. If your version of
+# bash is too old, the script above will not modify your shell environment and
+# no extended completion will be available.
 
 if [[ `echo $BASH_VERSION` < 4.1 ]]; then
-	echo
-	echo "WARNING: bash completion requires bash >= 4.1"
-	echo
-	echo "\$BASH_VERSION=$BASH_VERSION"
-	echo
-	cat <<EOF
+    echo
+    echo "WARNING: bash completion requires bash >= 4.1"
+    echo
+    echo "\$BASH_VERSION=$BASH_VERSION"
+    echo
+    cat <<EOF
 The port bash-completion at version 2.0 requires at least bash at
 version 4.1; the older bash 3.2 provided by Apple with Mac OS X is not
 compatible anymore with this version. Please make sure you are using
