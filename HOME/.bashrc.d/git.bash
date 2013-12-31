@@ -13,10 +13,6 @@ export GIT_PS1_SHOWSTASHSTATE=true #... if something is stashed($)
 export GIT_PS1_SHOWUNTRACKEDFILES=true #... untracked files(%)
 export GIT_PS1_SHOWUPSTREAM="auto verbose"
 
-PS1_USER="${COLOR_GREEN}\u${COLOR_RESET}"
-PS1_AT="${COLOR_GREEN}@${COLOR_RESET}"
-PS1_HOST="${COLOR_GREEN}\h${COLOR_RESET}"
-PS1_CURDIR="${COLOR_YELLOW}\w${COLOR_RESET}"
 PS1_GIT_FORMAT_STRING=" [${COLOR_BLUE}%s${COLOR_RESET}]"
 
 # From /opt/local/etc/bash_completion.d/git
@@ -28,4 +24,4 @@ PS1_GIT_FORMAT_STRING=" [${COLOR_BLUE}%s${COLOR_RESET}]"
 # PS1_XXXXX variables are expanded immediately because they are double
 # quoted, whereas the __git_ps1 command is evaluated for each prompt because
 # it is single quoted.
-PS1="${PS1_USER}${PS1_AT}${PS1_HOST} ${PS1_CURDIR}"'$(__git_ps1 "'"${PS1_GIT_FORMAT_STRING}"'")\n$ '
+export PS1="${PS1}"'$(__git_ps1 "'"${PS1_GIT_FORMAT_STRING}"'")'
