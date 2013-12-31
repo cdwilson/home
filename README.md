@@ -1,19 +1,23 @@
-home
-====
+[home]
+======
 
 by Christopher Wilson  
 <cwilson@cdwilson.us>
 
-overview
---------
-home uses [GNU Stow](http://www.gnu.org/software/stow/) and
-[Git](http://git-scm.com/) to manage revision controlled files in your home
-directory (.dotfiles, scripts, etc). Stow is used to automatically maintain
-all the symbolic links in the user's `$HOME` directory that resolve to the
-actual revision controlled files in the `HOME` directory of the repository.
 
-motivation
+Overview
+--------
+
+[home] uses [GNU Stow] and [Git] to manage revision controlled files in your
+home directory (.dotfiles, scripts, etc). Stow is used to automatically
+maintain all the symbolic links in the user's `$HOME` directory that resolve
+to the actual revision controlled files in the `HOME` directory of the
+repository.
+
+
+Motivation
 ----------
+
 I wanted to be able to keep track of all the random files that end up in my
 `$HOME` directories on the machines I work on. I didn't want to have to
 manually manage symbolic links, hence the dependency on Stow. Obviously, you
@@ -21,8 +25,10 @@ probably don't want to use my personal files "as is" on your own machine, so
 the idea with this repository is that it can serve as an example that you can
 emulate or fork for your own purposes.
 
-hooks
------
+
+Git Hooks
+---------
+
 For convenience, there is also a Git `post-commit` hook supplied to run Stow
 automatically after checking in changes to the repository. This makes sure
 that the symbolic links in `$HOME` are kept up to date and any new files are
@@ -47,7 +53,8 @@ behavior simply remove `--adopt` from the command in the hook file.
 Second, Stow is re-run with the `-R` option. This causes Stow to
 "restow" all the files in `HOME` ensuring any stale links are pruned.
 
-setup and usage
+
+Setup and Usage
 ---------------
 
 * install stow (make sure to use a recent version that supports `--adopt`)
@@ -59,7 +66,8 @@ setup and usage
 * edit your files in `$HOME/.home/HOME/` and remember to commit to force stow
   to update any symbolic links that have changed!
 
-example
+
+Example
 -------
 
 ```bash
@@ -88,3 +96,7 @@ git add <your changed files go here>
 git commit -m "these are my changes"
 # You're done! post-commit will automatically update the symlinks
 ```
+
+[home]: http://github.com/cdwilson/home
+[GNU Stow]: http://www.gnu.org/software/stow/
+[Git]: http://git-scm.com/
