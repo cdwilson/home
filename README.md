@@ -97,6 +97,15 @@ git commit -m "these are my changes"
 # You're done! post-commit will automatically update the symlinks
 ```
 
+Terminal.app
+------------
+
+![cdwilson.terminal][cdwilson.terminal]
+
+To use the Terminal.app settings shown in the photo above, just double click `terminal/cdwilson.terminal`.
+
+
 [home]: http://github.com/cdwilson/home
 [GNU Stow]: http://www.gnu.org/software/stow/
 [Git]: http://git-scm.com/
+[cdwilson.terminal]: doc/images/cdwilson.terminal.png "cdwilson Terminal.app preferences"
