@@ -108,4 +108,4 @@ To use the Terminal.app settings shown in the photo above, just double click `te
 [home]: http://github.com/cdwilson/home
 [GNU Stow]: http://www.gnu.org/software/stow/
 [Git]: http://git-scm.com/
-[cdwilson.terminal]: doc/images/cdwilson.terminal.png "cdwilson Terminal.app preferences"
+[cdwilson.terminal]: doc/images/cdwilson.terminal.png "cdwilson Terminal.app preferences" width=650px
