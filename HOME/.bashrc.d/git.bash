@@ -11,9 +11,11 @@ fi
 export GIT_PS1_SHOWDIRTYSTATE=true #... untagged(*) and staged(+) changes
 export GIT_PS1_SHOWSTASHSTATE=true #... if something is stashed($)
 export GIT_PS1_SHOWUNTRACKEDFILES=true #... untracked files(%)
-export GIT_PS1_SHOWUPSTREAM="auto verbose"
+export GIT_PS1_SHOWUPSTREAM="auto verbose name git"
+export GIT_PS1_DESCRIBE_STYLE="branch"
+# export GIT_PS1_SHOWCOLORHINTS=true
 
-PS1_GIT_FORMAT_STRING=" [${COLOR_BLUE}%s${COLOR_RESET}]"
+PS1_GIT_FORMAT_STRING="\n${COLOR_LIGHT_BLACK}git: ${COLOR_BLUE}%s${COLOR_RESET}"
 
 # From /opt/local/etc/bash_completion.d/git
 # export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
