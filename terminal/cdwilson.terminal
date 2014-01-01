@@ -225,7 +225,7 @@
 	AAAZAAAAAAAAAAAAAAAAAAAA2Q==
 	</data>
 	<key>UseBoldFonts</key>
-	<true/>
+	<false/>
 	<key>UseBrightBold</key>
 	<true/>
 	<key>VisualBell</key>
@@ -409,7 +409,7 @@
 	ZmZmAYPn5uY+g/79fT8Bhg==
 	</data>
 	<key>name</key>
-	<string>IR_Black</string>
+	<string>cwilson</string>
 	<key>redColour</key>
 	<data>
 	BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARm

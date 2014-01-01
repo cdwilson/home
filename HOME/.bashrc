@@ -74,21 +74,21 @@ alias ppath="echo \$PATH | tr ':' '\n'"
 
 export COLOR_RESET="\[\033[0m\]"
 export COLOR_BLACK="\[\033[0;30m\]"
-export COLOR_BRIGHT_BLACK="\[\033[1;30m\]"
+export COLOR_LIGHT_BLACK="\[\033[1;30m\]"
 export COLOR_RED="\[\033[0;31m\]"
-export COLOR_BRIGHT_RED="\[\033[1;31m\]"
+export COLOR_LIGHT_RED="\[\033[1;31m\]"
 export COLOR_GREEN="\[\033[0;32m\]"
-export COLOR_BRIGHT_GREEN="\[\033[1;32m\]"
+export COLOR_LIGHT_GREEN="\[\033[1;32m\]"
 export COLOR_YELLOW="\[\033[0;33m\]"
-export COLOR_BRIGHT_YELLOW="\[\033[1;33m\]"
+export COLOR_LIGHT_YELLOW="\[\033[1;33m\]"
 export COLOR_BLUE="\[\033[0;34m\]"
-export COLOR_BRIGHT_BLUE="\[\033[1;34m\]"
+export COLOR_LIGHT_BLUE="\[\033[1;34m\]"
 export COLOR_MAGENTA="\[\033[0;35m\]"
-export COLOR_BRIGHT_MAGENTA="\[\033[1;35m\]"
+export COLOR_LIGHT_MAGENTA="\[\033[1;35m\]"
 export COLOR_CYAN="\[\033[0;36m\]"
-export COLOR_BRIGHT_CYAN="\[\033[1;36m\]"
+export COLOR_LIGHT_CYAN="\[\033[1;36m\]"
 export COLOR_WHITE="\[\033[0;37m\]"
-export COLOR_BRIGHT_WHITE="\[\033[1;37m\]"
+export COLOR_LIGHT_WHITE="\[\033[1;37m\]"
 
 # http://unix.stackexchange.com/questions/2897/clicolor-and-ls-colors-in-bash
 export CLICOLOR=yes
@@ -110,12 +110,13 @@ export EDITOR="/usr/local/bin/mate -w"
 # Lion default prompt
 # export PS1="\h:\W \u\$ "
 
-PS1_USER="${COLOR_GREEN}\u${COLOR_RESET}"
-PS1_AT="${COLOR_GREEN}@${COLOR_RESET}"
+PS1_USER="${COLOR_RED}\u${COLOR_RESET}"
+PS1_AT="${COLOR_CYAN}@${COLOR_RESET}"
 PS1_HOST="${COLOR_GREEN}\h${COLOR_RESET}"
 PS1_CURDIR="${COLOR_YELLOW}\w${COLOR_RESET}"
 
-export PS1="${PS1_USER}${PS1_AT}${PS1_HOST} ${PS1_CURDIR}"
+# export PS1="${PS1_USER}${PS1_AT}${PS1_HOST} ${PS1_CURDIR}"
+export PS1="${PS1_HOST} ${PS1_USER} ${PS1_CURDIR}"
 
 # ----------------------------------------------------------------------
 # .bashrc.d
