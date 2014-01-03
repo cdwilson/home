@@ -40,7 +40,7 @@ First, it "stows" the repository `HOME` directory into the user's `$HOME`
 directory by creating symbolic links to all of the files in the repository
 `HOME` directory.
 
-*IMPORTANT:* this first pass is run with the Stow `--adopt` option. Therefore,
+**IMPORTANT:** this first pass is run with the Stow `--adopt` option. Therefore,
 if Stow finds a file in the user's `$HOME` directory with the same filename as
 a file in the repository `HOME` directory, it will *move* the file from the
 user's `$HOME` directory into the repository `HOME` directory (i.e. "adopt"
@@ -100,7 +100,7 @@ git commit -m "these are my changes"
 Terminal.app
 ------------
 
-![cdwilson.terminal][cdwilson.terminal]
+![][cdwilson.terminal]
 
 To use the Terminal.app settings shown in the photo above, just double click `terminal/cdwilson.terminal`.
 
@@ -108,4 +108,4 @@ To use the Terminal.app settings shown in the photo above, just double click `te
 [home]: http://github.com/cdwilson/home
 [GNU Stow]: http://www.gnu.org/software/stow/
 [Git]: http://git-scm.com/
-[cdwilson.terminal]: doc/images/cdwilson.terminal.png "cdwilson Terminal.app preferences" width=650px
+[cdwilson.terminal]: doc/images/cdwilson.terminal.png "cdwilson Terminal.app preferences"
