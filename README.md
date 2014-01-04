@@ -84,9 +84,9 @@ cp git/hooks/post-commit .git/hooks/
 chmod +x .git/hooks/post-commit
 # "adopt" any plain files that are in $HOME, but not yet in the repository,
 # by moving them into .home/HOME and replacing them with a symlink
-stow -v --adopt HOME
+stow --verbose --adopt HOME
 # restow to prune any stale symlinks
-stow -v -R HOME
+stow --verbose --restow HOME
 # run `git status` to view any changes between the newly adopted files and
 # the ones checked into the repository
 git status

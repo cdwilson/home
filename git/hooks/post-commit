@@ -8,15 +8,15 @@ if [ -z "$GIT_DIR" ]; then
 	exit 1
 fi
 
-# split into two steps for the case where HOME contains a copy of an existing
-# actual file and stow will not unstow because of conflicts
+# Split into two steps for the case where HOME contains a copy of an existing
+# file in $HOME and stow will not --restow because of conflicts
 
-# first adopt any real files that match the files in HOME
+# First, adopt any real files that match the files in HOME
 # since we've already committed our changes, if the adopted file differs git
 # status will show that it's been modified
 echo "Stowing HOME with --adopt flag"
-stow -v --adopt HOME
+stow --adopt HOME
 
-# Restow to prune any stale symlinks
+# Second, restow to prune any stale symlinks
 echo "Restowing HOME (to prune any stale symlinks)"
-stow -v -R HOME
+stow --restow HOME
