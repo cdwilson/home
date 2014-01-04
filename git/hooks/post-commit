@@ -14,9 +14,9 @@ fi
 # First, adopt any real files that match the files in HOME
 # since we've already committed our changes, if the adopted file differs git
 # status will show that it's been modified
-echo "Stowing HOME with --adopt flag"
+echo "Stowing HOME with --adopt option"
 stow --adopt HOME
 
 # Second, restow to prune any stale symlinks
-echo "Restowing HOME (to prune any stale symlinks)"
+echo "Stowing HOME with --restow option (to prune any stale symlinks)"
 stow --restow HOME

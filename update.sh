@@ -8,14 +8,23 @@
 # status will show that it's been modified
 while true; do
     read -p \
-        "Do you wish to adopt any files in \$HOME matching those in HOME/*? " yn
+        "Do you wish to move (adopt) any files in \$HOME matching those in \
+HOME/* (recommended)? " yn
     case $yn in
-        [Yy]* ) stow "$1" --adopt HOME; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
+        [Yy]* )
+            echo "Stowing HOME with --adopt option"
+            stow "$@" --adopt HOME
+            break
+            ;;
+        [Nn]* )
+            break
+            ;;
+        * )
+            echo "Please answer yes or no."
+            ;;
     esac
 done
 
 # Second, restow to prune any stale symlinks
-echo "Restowing HOME (to prune any stale symlinks)"
-stow "$1" --restow HOME
+echo "Stowing HOME with --restow option (to prune any stale symlinks)"
+stow "$@" --restow HOME
