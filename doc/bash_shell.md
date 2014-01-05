@@ -63,5 +63,5 @@ When you launch Terminal, a new window opens and runs the shell specified in the
 [Bash Completion How To]: http://trac.macports.org/wiki/howto/bash-completion
 [LFS profile]: http://www.linuxfromscratch.org/blfs/view/svn/postlfs/profile.html
 
-[^bash_completion]: Bash completion from MacPorts requires Bash version 4.1 or later, and at the time of this writing, the version of Bash that ships with OS X is too old (3.2.51(1)-release on Mavericks).  Make sure to toggle _Terminal_ -> _Preferences_ -> _Startup_ -> _Shells open with_ to _Command (complete path):_ `/opt/local/bin/bash`
+[^bash_completion]: Bash completion from MacPorts requires Bash version 4.1 or later, and at the time of this writing, the version of Bash that ships with OS X is too old (3.2.51(1)-release on Mavericks).  Make sure to toggle _Terminal_ -> _Preferences_ -> _Startup_ -> _Shells open with_ to _Command (complete path):_ `/opt/local/bin/bash`  
 For more details, see the [Bash Completion How To]
