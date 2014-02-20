@@ -101,7 +101,11 @@ export LS_OPTIONS='--color=auto'
 # Editor
 # ----------------------------------------------------------------------
 
-export EDITOR="/usr/local/bin/mate -w"
+# TextMate
+# export EDITOR="/usr/local/bin/mate -w"
+
+# Sublime
+export EDITOR='subl -w'
 
 # ----------------------------------------------------------------------
 # Prompt prefix

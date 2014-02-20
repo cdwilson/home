@@ -1,7 +1,7 @@
 [user]
 	name = Christopher Wilson
 [core]
-	editor = mate -w
+	editor = subl -n -w
 	excludesfile = /Users/cwilson/.gitignore
 	quotepath = false
 [color]
