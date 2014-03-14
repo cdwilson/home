@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+
+# command line equivalent
+# perl -pe 's/^(``` *\w+).*/$1/'
+
+while (<>) {
+	$_ =~ s/^(``` *\w+).*/$1/;
+    print($_);
+}
