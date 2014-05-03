@@ -8,4 +8,5 @@
 # rbenv
 # ----------------------------------------------------------------------
 
-export PATH="$HOME/.rbenv/bin:$PATH"
+export RBENV_ROOT="$HOME/.rbenv"
+export PATH="$RBENV_ROOT/.rbenv/bin:$PATH"
