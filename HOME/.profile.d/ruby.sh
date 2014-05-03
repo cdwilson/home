@@ -9,4 +9,4 @@
 # ----------------------------------------------------------------------
 
 export RBENV_ROOT="$HOME/.rbenv"
-export PATH="$RBENV_ROOT/.rbenv/bin:$PATH"
+export PATH="$RBENV_ROOT/bin:$PATH"
