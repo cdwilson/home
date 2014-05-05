@@ -13,64 +13,63 @@
 
 eval "$(rbenv init -)"
 
+# check whether printf supports -v
+__rbenv_printf_supports_v=
+printf -v __rbenv_printf_supports_v -- '%s' yes >/dev/null 2>&1
+
+# __rbenv_ps1 accepts 0 or 1 arguments (i.e., format string)
+# when called from PS1 using command substitution
+# in this mode it prints text to add to bash PS1 prompt
+#
+# __rbenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
+# in that case it _sets_ PS1. The arguments are parts of a PS1 string.
+# when two arguments are given, the first is prepended and the second appended
+# to the state string when assigned to PS1.
+# The optional third parameter will be used as printf format string to further
+# customize the output of the rbenv_version string.
 __rbenv_ps1 ()
 {
+    local pcmode=no
+    local detached=no
+    local ps1pc_start='\u@\h:\w '
+    local ps1pc_end='\$ '
     local printf_format=' (%s)'
     local rbenv_version=$(rbenv version-name)
-    
+
     case "$#" in
-        0|1)  printf_format="${1:-$printf_format}"
+        2|3)
+            pcmode=yes
+            ps1pc_start="$1"
+            ps1pc_end="$2"
+            printf_format="${3:-${printf_format}}"
         ;;
-        *)    return
+        0|1)
+            printf_format="${1:-${printf_format}}"
+        ;;
+        *)
+            return
         ;;
     esac
-    
-    if [ "$rbenv_version" != "system" ]; then
-        printf -- "$printf_format" "$rbenv_version"
+
+    if [ "${rbenv_version}" != "system" ]; then
+        if [ ${pcmode} = yes ]; then
+            if [ "${__rbenv_printf_supports_v-}" != yes ]; then
+                rbenv_version=$(printf -- "${printf_format}" "${rbenv_version}")
+            else
+                printf -v rbenv_version -- "${printf_format}" "${rbenv_version}"
+            fi
+            PS1="${ps1pc_start}${rbenv_version}${ps1pc_end}"
+        else
+            printf -- "${printf_format}" "${rbenv_version}"
+        fi
+    else
+        if [ ${pcmode} = yes ]; then
+            # in PC mode PS1 always needs to be set
+            PS1="${ps1pc_start}${ps1pc_end}"
+        fi
+        return
     fi
 }
 
-PS1_RBENV_FORMAT_STRING="\n${COLOR_LIGHT_BLACK}rbenv: ${COLOR_BLUE}%s${COLOR_RESET}"
-
-# This works because Bash lets you "glue" together quoted strings into a
-# single command as long as there are no spaces between the end of one quoted
-# string and the start of the next quoted string. Therefore, all the
-# PS1_XXXXX variables are expanded immediately because they are double
-# quoted, whereas the __rbenv_ps1 command is evaluated for each prompt
-# because it is single quoted.
-export PS1="${PS1}"'$(__rbenv_ps1 "'"${PS1_RBENV_FORMAT_STRING}"'")'
-
-# ----------------------------------------------------------------------
-# chruby
-# ----------------------------------------------------------------------
-
-# source /stow/share/chruby/chruby.sh
-# source /stow/share/chruby/auto.sh
-# 
-# __chruby_ps1 ()
-# {
-#     local printf_format=' (%s)'
-#     local chruby_version_str=$(chruby | grep \*)
-#     
-#     case "$#" in
-#         0|1)  printf_format="${1:-$printf_format}"
-#         ;;
-#         *)    return
-#         ;;
-#     esac
-#     
-#     if [ -n "$chruby_version_str" ]; then
-#         chruby_version=$(echo -n "$chruby_version_str" | awk '{print $2}')
-#         printf -- "$printf_format" "$chruby_version"
-#     fi
-# }
-# 
-# PS1_CHRUBY_FORMAT_STRING="\n${COLOR_LIGHT_BLACK}chruby: ${COLOR_BLUE}%s${COLOR_RESET}"
-
-# This works because Bash lets you "glue" together quoted strings into a
-# single command as long as there are no spaces between the end of one quoted
-# string and the start of the next quoted string. Therefore, all the
-# PS1_XXXXX variables are expanded immediately because they are double
-# quoted, whereas the __chruby_ps1 command is evaluated for each prompt
-# because it is single quoted.
-# export PS1="${PS1}"'$(__chruby_ps1 "'"${PS1_CHRUBY_FORMAT_STRING}"'")'
+# Enable rbenv version in the prompt
+export PROMPT_COMMAND="${PROMPT_COMMAND}"'__rbenv_ps1 "" "" "${PROMPT_BLUE}rbenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
