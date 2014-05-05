@@ -60,7 +60,7 @@ shopt -s histappend
 # ----------------------------------------------------------------------
 
 # disk usage with human sizes and minimal depth
-alias du1='du -h --max-depth=1'
+alias du1='du -h -d 1'
 alias fn='find . -name'
 alias hi='history | tail -20'
 alias la="ls -a" # list all, includes dot files
