@@ -3,8 +3,8 @@
 # ----------------------------------------------------------------------
 
 # source git-prompt.sh to enable __git_ps1
-if [ -r /opt/local/share/git-core/git-prompt.sh ]; then
-  . /opt/local/share/git-core/git-prompt.sh
+if [ -r /opt/local/share/git/git-prompt.sh ]; then
+  . /opt/local/share/git/git-prompt.sh
 fi
 
 # Enable git status in the prompt
