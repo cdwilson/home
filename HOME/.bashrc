@@ -9,9 +9,9 @@
 # References:
 # http://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html
 
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Environment Configuration
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # detect interactive shell
 case "$-" in
@@ -55,9 +55,9 @@ export HISTSIZE=10000
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Aliases
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # disk usage with human sizes and minimal depth
 alias du1='du -h -d 1'
@@ -68,11 +68,11 @@ alias ll="ls -l" # long list, excludes dot files
 alias lla="ls -la" # long list all, includes dot files
 alias ppath="echo \$PATH | tr ':' '\n'"
 
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Colors
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
-# From http://en.wikipedia.org/wiki/ANSI_escape_code 
+# From http://en.wikipedia.org/wiki/ANSI_escape_code
 # Escape sequences start with the character ESC (ASCII decimal 27/hex 0x1B/octal
 # 033). For two character sequences, the second character is in the range ASCII
 # 64 to 95 (@ to _). However, most of the sequences are more than two
@@ -145,9 +145,9 @@ export LS_OPTIONS='--color=auto'
 # http://www.geekology.co.za/blog/2009/04/enabling-bash-terminal-directory-file-color-highlighting-mac-os-x/
 # export LSCOLORS=ExFxCxDxBxegedabagacad
 
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Editor
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # TextMate
 # export EDITOR="/usr/local/bin/mate -w"
@@ -157,9 +157,9 @@ export EDITOR='subl -w'
 
 alias e='subl'
 
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Begin Prompt
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # http://www.gnu.org/software/bash/manual/bashref.html#Printing-a-Prompt
 # \[: Begin a sequence of non-printing characters. This could be used to embed a
@@ -197,30 +197,193 @@ export PS1_PREFIX="${PROMPT_HOST} ${PROMPT_USER} ${PROMPT_CURDIR}\n"
 export PS1_SUFFIX="${PROMPT_BLUE}(${PROMPT_RESET}${PROMPT_MAGENTA}\!${PROMPT_RESET}${PROMPT_BLUE})\$${PROMPT_RESET} "
 export PROMPT_COMMAND='PS1_PC="";'
 
-# ----------------------------------------------------------------------
-# .bashrc.d
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# Git
+# ----------------------------------------------------------------------------
 
-# source any extra interactive shell files in .bashrc.d
-if [ -d $HOME/.bashrc.d ]; then
-    for file in $HOME/.bashrc.d/*.bash; do
-        if [ -r $file ]; then
-            . $file
-        fi
-    done
-    unset file
+# source git-prompt.sh to enable __git_ps1
+if [ -r /opt/local/share/git/git-prompt.sh ]; then
+  . /opt/local/share/git/git-prompt.sh
 fi
 
-# ----------------------------------------------------------------------
+# Enable git status in the prompt
+export PROMPT_COMMAND="${PROMPT_COMMAND}"'__git_ps1 "" "" "${PROMPT_BLUE}git:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+
+# __git_ps1 options
+export GIT_PS1_SHOWDIRTYSTATE=true #... untagged(*) and staged(+) changes
+export GIT_PS1_SHOWSTASHSTATE=true #... if something is stashed($)
+export GIT_PS1_SHOWUNTRACKEDFILES=true #... untracked files(%)
+export GIT_PS1_SHOWUPSTREAM="auto verbose name git"
+export GIT_PS1_DESCRIBE_STYLE="branch"
+export GIT_PS1_SHOWCOLORHINTS=true
+
+# ----------------------------------------------------------------------------
+# pyenv
+# ----------------------------------------------------------------------------
+
+eval "$(pyenv init -)"
+
+# check whether printf supports -v
+__pyenv_printf_supports_v=
+printf -v __pyenv_printf_supports_v -- '%s' yes >/dev/null 2>&1
+
+# __pyenv_ps1 accepts 0 or 1 arguments (i.e., format string)
+# when called from PS1 using command substitution
+# in this mode it prints text to add to bash PS1 prompt
+#
+# __pyenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
+# in that case it _sets_ PS1. The arguments are parts of a PS1 string.
+# when two arguments are given, the first is prepended and the second appended
+# to the state string when assigned to PS1.
+# The optional third parameter will be used as printf format string to further
+# customize the output of the pyenv_version string.
+__pyenv_ps1 ()
+{
+    local pcmode=no
+    local detached=no
+    local ps1pc_start='\u@\h:\w '
+    local ps1pc_end='\$ '
+    local printf_format=' (%s)'
+    local pyenv_version=$(pyenv version-name)
+
+    case "$#" in
+        2|3)
+            pcmode=yes
+            ps1pc_start="$1"
+            ps1pc_end="$2"
+            printf_format="${3:-${printf_format}}"
+        ;;
+        0|1)
+            printf_format="${1:-${printf_format}}"
+        ;;
+        *)
+            return
+        ;;
+    esac
+
+    if [ "${pyenv_version}" != "system" ]; then
+        if [ ${pcmode} = yes ]; then
+            if [ "${__pyenv_printf_supports_v-}" != yes ]; then
+                pyenv_version=$(printf -- "${printf_format}" "${pyenv_version}")
+            else
+                printf -v pyenv_version -- "${printf_format}" "${pyenv_version}"
+            fi
+            PS1="${ps1pc_start}${pyenv_version}${ps1pc_end}"
+        else
+            printf -- "${printf_format}" "${pyenv_version}"
+        fi
+    else
+        if [ ${pcmode} = yes ]; then
+            # in PC mode PS1 always needs to be set
+            PS1="${ps1pc_start}${ps1pc_end}"
+        fi
+        return
+    fi
+}
+
+# Enable pyenv version in the prompt
+export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+
+# ----------------------------------------------------------------------------
+# virtualenv
+# ----------------------------------------------------------------------------
+
+export VIRTUAL_ENV_DISABLE_PROMPT=true
+
+# ----------------------------------------------------------------------------
+# pip
+# ----------------------------------------------------------------------------
+
+if ! command -v pip >/dev/null 2>&1; then
+    eval "$(pip completion --bash)"
+fi
+
+# ----------------------------------------------------------------------------
+# rvm
+# ----------------------------------------------------------------------------
+
+# Load RVM into a shell session *as a function*
+# if [ -r "$HOME/.rvm/scripts/rvm" ]; then
+#   . "$HOME/.rvm/scripts/rvm"
+# fi
+
+# ----------------------------------------------------------------------------
+# rbenv
+# ----------------------------------------------------------------------------
+
+eval "$(rbenv init -)"
+
+# check whether printf supports -v
+__rbenv_printf_supports_v=
+printf -v __rbenv_printf_supports_v -- '%s' yes >/dev/null 2>&1
+
+# __rbenv_ps1 accepts 0 or 1 arguments (i.e., format string)
+# when called from PS1 using command substitution
+# in this mode it prints text to add to bash PS1 prompt
+#
+# __rbenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
+# in that case it _sets_ PS1. The arguments are parts of a PS1 string.
+# when two arguments are given, the first is prepended and the second appended
+# to the state string when assigned to PS1.
+# The optional third parameter will be used as printf format string to further
+# customize the output of the rbenv_version string.
+__rbenv_ps1 ()
+{
+    local pcmode=no
+    local detached=no
+    local ps1pc_start='\u@\h:\w '
+    local ps1pc_end='\$ '
+    local printf_format=' (%s)'
+    local rbenv_version=$(rbenv version-name)
+
+    case "$#" in
+        2|3)
+            pcmode=yes
+            ps1pc_start="$1"
+            ps1pc_end="$2"
+            printf_format="${3:-${printf_format}}"
+        ;;
+        0|1)
+            printf_format="${1:-${printf_format}}"
+        ;;
+        *)
+            return
+        ;;
+    esac
+
+    if [ "${rbenv_version}" != "system" ]; then
+        if [ ${pcmode} = yes ]; then
+            if [ "${__rbenv_printf_supports_v-}" != yes ]; then
+                rbenv_version=$(printf -- "${printf_format}" "${rbenv_version}")
+            else
+                printf -v rbenv_version -- "${printf_format}" "${rbenv_version}"
+            fi
+            PS1="${ps1pc_start}${rbenv_version}${ps1pc_end}"
+        else
+            printf -- "${printf_format}" "${rbenv_version}"
+        fi
+    else
+        if [ ${pcmode} = yes ]; then
+            # in PC mode PS1 always needs to be set
+            PS1="${ps1pc_start}${ps1pc_end}"
+        fi
+        return
+    fi
+}
+
+# Enable rbenv version in the prompt
+export PROMPT_COMMAND="${PROMPT_COMMAND}"'__rbenv_ps1 "" "" "${PROMPT_BLUE}rbenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+
+# ----------------------------------------------------------------------------
 # End Prompt
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 export PROMPT_COMMAND="${PROMPT_COMMAND}"'PS1="${PS1_PREFIX}${PS1_PC}${PS1_SUFFIX}";'
 export PS1="${PS1_PREFIX}${PS1_SUFFIX}"
 
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Bash Completion
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 # See http://trac.macports.org/wiki/howto/bash-completion
 
