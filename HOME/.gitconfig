@@ -1,5 +1,6 @@
 [user]
 	name = Christopher Wilson
+	email = cwilson@cdwilson.us
 [core]
 	editor = subl -n -w
 	excludesfile = /Users/cwilson/.gitignore
@@ -26,10 +27,10 @@
 [diff]
 	tool = Kaleidoscope
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true
 [color "diff"]
 	whitespace = red reverse
@@ -47,3 +48,6 @@
 	trustExitCode = true
 [mergetool]
 	prompt = false
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
