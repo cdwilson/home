@@ -172,4 +172,4 @@ THE SOFTWARE.
 [issue tracker]: http://github.com/cdwilson/home/issues
 [GNU Stow]: http://www.gnu.org/software/stow/
 [Git]: http://git-scm.com/
-[cdwilson.terminal]: doc/images/cdwilson.terminal.png "cdwilson Terminal.app preferences"
+[cdwilson.terminal]: images/cdwilson.terminal.png "cdwilson Terminal.app preferences"
