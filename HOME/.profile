@@ -41,11 +41,17 @@ export MANPATH="/opt/local/share/man:$MANPATH"
 # export PATH="/usr/texbin:$PATH"
 
 # ----------------------------------------------------------------------------
+# anyenv
+# ----------------------------------------------------------------------------
+
+export PATH="$HOME/.anyenv/bin:$PATH"
+
+# ----------------------------------------------------------------------------
 # pyenv
 # ----------------------------------------------------------------------------
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
 
 # ----------------------------------------------------------------------------
 # rvm
@@ -57,8 +63,8 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 # rbenv
 # ----------------------------------------------------------------------------
 
-export RBENV_ROOT="$HOME/.rbenv"
-export PATH="$RBENV_ROOT/bin:$PATH"
+# export RBENV_ROOT="$HOME/.rbenv"
+# export PATH="$RBENV_ROOT/bin:$PATH"
 
 # ----------------------------------------------------------------------------
 # TinyOS
