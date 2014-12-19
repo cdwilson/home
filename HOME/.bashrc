@@ -167,7 +167,9 @@ export VIRTUAL_ENV_DISABLE_PROMPT=true
 # anyenv initialization
 # ----------------------------------------------------------------------------
 
-eval "$(anyenv init -)"
+if command -v anyenv >/dev/null 2>&1; then
+  eval "$(anyenv init -)"
+fi
 
 # ----------------------------------------------------------------------------
 # pyenv initialization
