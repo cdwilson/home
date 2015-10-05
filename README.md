@@ -24,7 +24,7 @@ In addition, there are some other goodies included (like my [Terminal.app](#term
 
 ## Motivation
 
-I wanted to be able to keep track of all the random files that end up in my `$HOME` directories on the machines I work on. To avoid turning my `$HOME` directory into a repository itself, I needed to isolate these files in a subdirectory of my `$HOME` directory (i.e. `$HOME/.home`), but I didn't want to have to manually manage symbolic links between the two.  It turns out that Stow works perfectly for this type of thing, hence the dependency on Stow. 
+I wanted to be able to keep track of all the random files that end up in my `$HOME` directories on the machines I work on. To avoid turning my `$HOME` directory into a repository itself, I needed to isolate these files in a subdirectory of my `$HOME` directory (i.e. `$HOME/.home`), but I didn't want to have to manually manage symbolic links between the two.  It turns out that Stow works perfectly for this type of thing, hence the dependency on Stow.
 
 Obviously, you probably don't want to use my personal files "as is" on your own machine, so the idea with this repository is that it can serve as an example workflow that you can emulate or fork for your own purposes.
 
@@ -36,53 +36,59 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
     ```bash
     # via MacPorts for Mac
     sudo port install stow
-    
+
     # via apt-get for Linux
     sudo apt-get install stow
     ```
-    
-* Change to $HOME directory
+
+* Change to `$HOME` directory
 
     ```bash
     cd ~
     ```
-    
+
 * Checkout this repository as `$HOME/.home`
 
     ```bash
     git clone git@github.com:cdwilson/home.git .home
     ```
-    
+
+* Change to `.home` directory
+
+    ```bash
+    cd .home
+    ```
+
 * Run `setup.sh` to install the git `post-commit` hook. This will also automatically create symlinks between the files in `$HOME/.home/HOME/` and your `$HOME` directory.  It will prompt for permission to move (adopt) any real files in `$HOME` (i.e. existing `.profile`, `.bashrc`, etc) into the `$HOME/.home/HOME/` directory, and replace them with a symlink (see [How it works](#how-it-works) below).
 
     ```bash
     ./setup.sh
     ```
-    
+
 * Determine any changes between the newly adopted files and the previous revisions of those files stored in the repository
 
     ```bash
     git status
     ```
-    
+
 * Add any adopted file to keep the version moved from `$HOME`
 
     ```bash
     git add <any changed files go here>
     ```
-    
+
 * Revert any adopted file to replace the version moved from `$HOME` with the version checked into the repository
 
     ```bash
     git checkout <any changed files go here>
     ```
-    
+
 * Commit your changes
 
     ```bash
     git commit -m "<describe your changes here>"
     ```
-    
+
 * You're done! The git `post-commit` hook will automatically update any symlinks in `$HOME` to point to the files in `$HOME/.home/HOME/`
 
 
@@ -114,7 +120,7 @@ Stow is run in two passes:
     ```bash
     stow --restow HOME
     ```
-    
+
 These commands must be run in this sequence and can not be combined (i.e. `stow --adopt --restow HOME`) to avoid errors when `$HOME` and `$HOME/.home/HOME/` have conflicting files.
 
 
