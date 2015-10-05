@@ -79,7 +79,7 @@ export MAKERULES=$TOSROOT/support/make/Makerules
 # Vagrant
 # ----------------------------------------------------------------------------
 
-export VAGRANT_DEFAULT_PROVIDER="vmware_fusion"
+# export VAGRANT_DEFAULT_PROVIDER="vmware_fusion"
 export VAGRANT_VMWARE_CLONE_DIRECTORY="~/Virtual Machines"
 
 # ----------------------------------------------------------------------------
