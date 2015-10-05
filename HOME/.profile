@@ -16,6 +16,12 @@ export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 export MANPATH="/opt/local/share/man:$MANPATH"
 
 # ----------------------------------------------------------------------------
+# MacPorts editor
+# ----------------------------------------------------------------------------
+
+# export MP_EDITOR="/usr/local/bin/mate -w"
+
+# ----------------------------------------------------------------------------
 # GNU coreutils
 # ----------------------------------------------------------------------------
 
@@ -28,10 +34,10 @@ export MANPATH="/opt/local/share/man:$MANPATH"
 #     /opt/local/libexec/gnubin/
 
 # ----------------------------------------------------------------------------
-# MacPorts editor
+# pkg-config
 # ----------------------------------------------------------------------------
 
-# export MP_EDITOR="/usr/local/bin/mate -w"
+export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
 
 # ----------------------------------------------------------------------------
 # MacTEX
