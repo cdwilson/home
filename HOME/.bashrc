@@ -153,9 +153,10 @@ export LS_OPTIONS='--color=auto'
 # export EDITOR="/usr/local/bin/mate -w"
 
 # Sublime
-export EDITOR='subl -w'
+# export EDITOR='subl -w'
 
-alias e='subl'
+# Atom
+export EDITOR='atom'
 
 # ----------------------------------------------------------------------------
 # python virtualenv
