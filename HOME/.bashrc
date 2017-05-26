@@ -150,13 +150,13 @@ export LS_OPTIONS='--color=auto'
 # ----------------------------------------------------------------------------
 
 # TextMate
-# export EDITOR="/usr/local/bin/mate -w"
+# export EDITOR='/usr/local/bin/mate -w'
 
 # Sublime
 # export EDITOR='subl -w'
 
 # Atom
-export EDITOR='atom'
+export EDITOR='atom --wait'
 
 # ----------------------------------------------------------------------------
 # python virtualenv
