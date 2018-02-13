@@ -165,7 +165,7 @@ export EDITOR='code --wait'
 # python virtualenv
 # ----------------------------------------------------------------------------
 
-export VIRTUAL_ENV_DISABLE_PROMPT=true
+# export VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # ----------------------------------------------------------------------------
 # anyenv initialization
@@ -239,6 +239,10 @@ export PS1_PREFIX="${PROMPT_HOST} ${PROMPT_USER} ${PROMPT_CURDIR}\n"
 export PS1_SUFFIX="${PROMPT_BLUE}[${PROMPT_RESET}${PROMPT_MAGENTA}\!${PROMPT_RESET}${PROMPT_BLUE}]\$${PROMPT_RESET} "
 export PROMPT_COMMAND='PS1_PC="";'
 
+# check whether printf supports -v
+__printf_supports_v=
+printf -v __printf_supports_v -- '%s' yes >/dev/null 2>&1
+
 # ----------------------------------------------------------------------------
 # Git prompt
 # ----------------------------------------------------------------------------
@@ -263,10 +267,6 @@ export GIT_PS1_SHOWCOLORHINTS=true
 # pyenv prompt
 # ----------------------------------------------------------------------------
 
-# check whether printf supports -v
-# __pyenv_printf_supports_v=
-# printf -v __pyenv_printf_supports_v -- '%s' yes >/dev/null 2>&1
-
 # __pyenv_ps1 accepts 0 or 1 arguments (i.e., format string)
 # when called from PS1 using command substitution
 # in this mode it prints text to add to bash PS1 prompt
@@ -277,60 +277,118 @@ export GIT_PS1_SHOWCOLORHINTS=true
 # to the state string when assigned to PS1.
 # The optional third parameter will be used as printf format string to further
 # customize the output of the pyenv_version string.
-# __pyenv_ps1 ()
-# {
-#     local pcmode=no
-#     local detached=no
-#     local ps1pc_start='\u@\h:\w '
-#     local ps1pc_end='\$ '
-#     local printf_format=' (%s)'
-#     local pyenv_version=$(pyenv version-name)
+__pyenv_ps1 ()
+{
+    local pcmode=no
+    local detached=no
+    local ps1pc_start='\u@\h:\w '
+    local ps1pc_end='\$ '
+    local printf_format=' (%s)'
+    local pyenv_version=$(pyenv version-name)
 
-#     case "$#" in
-#         2|3)
-#             pcmode=yes
-#             ps1pc_start="$1"
-#             ps1pc_end="$2"
-#             printf_format="${3:-${printf_format}}"
-#         ;;
-#         0|1)
-#             printf_format="${1:-${printf_format}}"
-#         ;;
-#         *)
-#             return
-#         ;;
-#     esac
+    case "$#" in
+        2|3)
+            pcmode=yes
+            ps1pc_start="$1"
+            ps1pc_end="$2"
+            printf_format="${3:-${printf_format}}"
+        ;;
+        0|1)
+            printf_format="${1:-${printf_format}}"
+        ;;
+        *)
+            return
+        ;;
+    esac
 
-#     if [ "${pyenv_version}" != "system" ]; then
-#         if [ ${pcmode} = yes ]; then
-#             if [ "${__pyenv_printf_supports_v-}" != yes ]; then
-#                 pyenv_version=$(printf -- "${printf_format}" "${pyenv_version}")
-#             else
-#                 printf -v pyenv_version -- "${printf_format}" "${pyenv_version}"
-#             fi
-#             PS1="${ps1pc_start}${pyenv_version}${ps1pc_end}"
-#         else
-#             printf -- "${printf_format}" "${pyenv_version}"
-#         fi
-#     else
-#         if [ ${pcmode} = yes ]; then
-#             # in PC mode PS1 always needs to be set
-#             PS1="${ps1pc_start}${ps1pc_end}"
-#         fi
-#         return
-#     fi
-# }
+    # if [ "${pyenv_version}" != "system" ]; then
+    if (pyenv local >/dev/null 2>&1); then
+        if [ ${pcmode} = yes ]; then
+            if [ "${__printf_supports_v-}" != yes ]; then
+                pyenv_version=$(printf -- "${printf_format}" "${pyenv_version}")
+            else
+                printf -v pyenv_version -- "${printf_format}" "${pyenv_version}"
+            fi
+            PS1="${ps1pc_start}${pyenv_version}${ps1pc_end}"
+        else
+            printf -- "${printf_format}" "${pyenv_version}"
+        fi
+    else
+        if [ ${pcmode} = yes ]; then
+            # in PC mode PS1 always needs to be set
+            PS1="${ps1pc_start}${ps1pc_end}"
+        fi
+        return
+    fi
+}
 
 # Enable pyenv version in the prompt
-# export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+
+# ----------------------------------------------------------------------------
+# python virtualenv prompt
+# ----------------------------------------------------------------------------
+
+# __virtualenv_ps1 accepts 0 or 1 arguments (i.e., format string)
+# when called from PS1 using command substitution
+# in this mode it prints text to add to bash PS1 prompt
+#
+# __virtualenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
+# in that case it _sets_ PS1. The arguments are parts of a PS1 string.
+# when two arguments are given, the first is prepended and the second appended
+# to the state string when assigned to PS1.
+# The optional third parameter will be used as printf format string to further
+# customize the output of the virtualenv_name string.
+__virtualenv_ps1 ()
+{
+    local pcmode=no
+    local detached=no
+    local ps1pc_start='\u@\h:\w '
+    local ps1pc_end='\$ '
+    local printf_format=' (%s)'
+    local virtualenv_name="\$(basename '$VIRTUAL_ENV')"
+
+    case "$#" in
+        2|3)
+            pcmode=yes
+            ps1pc_start="$1"
+            ps1pc_end="$2"
+            printf_format="${3:-${printf_format}}"
+        ;;
+        0|1)
+            printf_format="${1:-${printf_format}}"
+        ;;
+        *)
+            return
+        ;;
+    esac
+
+    if [ -n "${VIRTUAL_ENV}" ] && [ -z "${VIRTUAL_ENV_DISABLE_PROMPT}" ]; then
+        if [ ${pcmode} = yes ]; then
+            if [ "${__printf_supports_v-}" != yes ]; then
+                virtualenv_name=$(printf -- "${printf_format}" "${virtualenv_name}")
+            else
+                printf -v virtualenv_name -- "${printf_format}" "${virtualenv_name}"
+            fi
+            PS1="${ps1pc_start}${virtualenv_name}${ps1pc_end}"
+        else
+            printf -- "${printf_format}" "${virtualenv_name}"
+        fi
+    else
+        if [ ${pcmode} = yes ]; then
+            # in PC mode PS1 always needs to be set
+            PS1="${ps1pc_start}${ps1pc_end}"
+        fi
+        return
+    fi
+}
+
+# Enable virtualenv display in the prompt
+export PROMPT_COMMAND="${PROMPT_COMMAND}"'__virtualenv_ps1 "" "" "${PROMPT_BLUE}virtualenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
 
 # ----------------------------------------------------------------------------
 # rbenv prompt
 # ----------------------------------------------------------------------------
-
-# check whether printf supports -v
-# __rbenv_printf_supports_v=
-# printf -v __rbenv_printf_supports_v -- '%s' yes >/dev/null 2>&1
 
 # __rbenv_ps1 accepts 0 or 1 arguments (i.e., format string)
 # when called from PS1 using command substitution
@@ -368,7 +426,7 @@ export GIT_PS1_SHOWCOLORHINTS=true
 
 #     if [ "${rbenv_version}" != "system" ]; then
 #         if [ ${pcmode} = yes ]; then
-#             if [ "${__rbenv_printf_supports_v-}" != yes ]; then
+#             if [ "${__printf_supports_v-}" != yes ]; then
 #                 rbenv_version=$(printf -- "${printf_format}" "${rbenv_version}")
 #             else
 #                 printf -v rbenv_version -- "${printf_format}" "${rbenv_version}"
@@ -396,15 +454,47 @@ export GIT_PS1_SHOWCOLORHINTS=true
 export PROMPT_COMMAND="${PROMPT_COMMAND}"'PS1="${PS1_PREFIX}${PS1_PC}${PS1_SUFFIX}";'
 export PS1="${PS1_PREFIX}${PS1_SUFFIX}"
 
+# --------------------------------------------------------------------------
+# pip Bash completion
+# --------------------------------------------------------------------------
+
+if command -v pip >/dev/null 2>&1; then
+    eval "$(pip completion --bash)"
+fi
+
+# --------------------------------------------------------------------------
+# pipenv Bash completion
+# --------------------------------------------------------------------------
+
+if command -v pipenv >/dev/null 2>&1; then
+    eval "$(pipenv --completion)"
+fi
+
 # ----------------------------------------------------------------------------
-# Bash Completion
+# pew Bash completion
+# ----------------------------------------------------------------------------
+
+if command -v pew >/dev/null 2>&1; then
+  source "$(dirname $(pew shell_config))"/complete.bash
+fi
+
+# --------------------------------------------------------------------------
+# direnv Bash completion
+# --------------------------------------------------------------------------
+
+if command -v pipenv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
+# ----------------------------------------------------------------------------
+# MacPorts Bash Completion
 # ----------------------------------------------------------------------------
 
 # See http://trac.macports.org/wiki/howto/bash-completion
 
 if [[ `echo $BASH_VERSION` < 4.1 ]]; then
     echo
-    echo "WARNING: bash completion requires bash >= 4.1"
+    echo "WARNING: bash-completion requires bash >= 4.1"
     echo
     echo "\$BASH_VERSION=$BASH_VERSION"
     echo
@@ -416,14 +506,6 @@ will not modify your shell environment and no extended completion
 will be available.
 EOF
 else
-    # ----------------------------------------------------------------------------
-    # pip Bash completion
-    # ----------------------------------------------------------------------------
-
-    if command -v pip >/dev/null 2>&1; then
-        eval "$(pip completion --bash)"
-    fi
-
     # Make sure you add this after any PATH manipulation as otherwise the
     # bash-completion will not work correctly.
     if [ -r /opt/local/etc/bash_completion ]; then
