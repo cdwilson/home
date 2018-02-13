@@ -156,7 +156,10 @@ export LS_OPTIONS='--color=auto'
 # export EDITOR='subl -w'
 
 # Atom
-export EDITOR='atom --wait'
+# export EDITOR='atom --wait'
+
+# Visual Studio Code
+export EDITOR='code --wait'
 
 # ----------------------------------------------------------------------------
 # python virtualenv
