@@ -3,7 +3,7 @@
 	email = cwilson@cdwilson.us
 [core]
 	editor = code --wait
-	excludesfile = /Users/chwilso3/.gitignore_global
+	excludesfile = /Users/chris/.gitignore
 	quotepath = false
 [color]
 	diff = auto
@@ -52,4 +52,9 @@
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
 [commit]
-	template = /Users/chwilso3/.stCommitMsg
+	template = /Users/chris/.stCommitMsg
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
