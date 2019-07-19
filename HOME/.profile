@@ -21,7 +21,6 @@ export SHELL="/opt/local/bin/bash"
 
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 export MANPATH="/opt/local/share/man:$MANPATH"
-export DYLD_LIBRARY_PATH="/opt/local/lib:$DYLD_LIBRARY_PATH"
 
 # ----------------------------------------------------------------------------
 # GNU coreutils
