@@ -247,9 +247,14 @@ printf -v __printf_supports_v -- '%s' yes >/dev/null 2>&1
 # Git prompt
 # ----------------------------------------------------------------------------
 
-# source git-prompt.sh to enable __git_ps1
-if [ -r /opt/local/share/git/git-prompt.sh ]; then
-  . /opt/local/share/git/git-prompt.sh
+# source git-prompt.sh to enable __git_ps1 (MacPorts)
+# if [ -r /opt/local/share/git/git-prompt.sh ]; then
+#   . /opt/local/share/git/git-prompt.sh
+# fi
+
+# source git-prompt.sh to enable __git_ps1 (Homebrew)
+if [ -f `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
+    . `brew --prefix`/etc/bash_completion.d/git-prompt.sh
 fi
 
 # Enable git status in the prompt
@@ -492,23 +497,40 @@ fi
 
 # See http://trac.macports.org/wiki/howto/bash-completion
 
+# if [[ `echo $BASH_VERSION` < 4.1 ]]; then
+#     echo
+#     echo "WARNING: bash-completion requires bash >= 4.1"
+#     echo
+#     echo "\$BASH_VERSION=$BASH_VERSION"
+#     echo
+#     cat <<EOF
+# The port bash-completion >=2.0 requires bash >=4.1; please make sure
+# you are using /opt/local/bin/bash by changing the preferences of your
+# terminal accordingly. If your version of bash is too old, the script
+# will not modify your shell environment and no extended completion
+# will be available.
+# EOF
+# else
+#     # Make sure you add this after any PATH manipulation as otherwise the
+#     # bash-completion will not work correctly.
+#     if [ -r "/opt/local/etc/bash_completion" ]; then
+#         . "/opt/local/etc/bash_completion"
+#     fi
+# fi
+
+# ----------------------------------------------------------------------------
+# Homebrew Bash Completion
+# ----------------------------------------------------------------------------
 if [[ `echo $BASH_VERSION` < 4.1 ]]; then
     echo
     echo "WARNING: bash-completion requires bash >= 4.1"
     echo
     echo "\$BASH_VERSION=$BASH_VERSION"
     echo
-    cat <<EOF
-The port bash-completion >=2.0 requires bash >=4.1; please make sure
-you are using /opt/local/bin/bash by changing the preferences of your
-terminal accordingly. If your version of bash is too old, the script
-will not modify your shell environment and no extended completion
-will be available.
-EOF
 else
     # Make sure you add this after any PATH manipulation as otherwise the
     # bash-completion will not work correctly.
-    if [ -r /opt/local/etc/bash_completion ]; then
-        . /opt/local/etc/bash_completion
+    if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
+        . "/usr/local/etc/profile.d/bash_completion.sh"
     fi
 fi

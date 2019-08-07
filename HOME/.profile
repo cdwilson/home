@@ -5,7 +5,10 @@
 # ----------------------------------------------------------------------------
 
 # use bash from MacPorts (required for bash-completion)
-export SHELL="/opt/local/bin/bash"
+# export SHELL="/opt/local/bin/bash"
+
+# use bash from Homebrew (required for bash-completion)
+export SHELL="/usr/local/bin/bash"
 
 # ----------------------------------------------------------------------------
 # Java
@@ -19,8 +22,8 @@ export SHELL="/opt/local/bin/bash"
 # MacPorts paths
 # ----------------------------------------------------------------------------
 
-export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
-export MANPATH="/opt/local/share/man:$MANPATH"
+# export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# export MANPATH="/opt/local/share/man:$MANPATH"
 
 # ----------------------------------------------------------------------------
 # GNU coreutils
@@ -100,6 +103,13 @@ export VAGRANT_VMWARE_CLONE_DIRECTORY="~/Virtual Machines"
 # ----------------------------------------------------------------------------
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# ----------------------------------------------------------------------------
+# rshell (MicroPython)
+# ----------------------------------------------------------------------------
+
+export RSHELL_BAUD="115200"
+export RSHELL_PORT="/dev/tty.usbmodem3189367630342"
 
 # ----------------------------------------------------------------------------
 # User paths

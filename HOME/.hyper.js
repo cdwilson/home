@@ -86,7 +86,13 @@ module.exports = {
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
-    shell: '/opt/local/bin/bash',
+    // shell: '/bin/bash',
+    
+    // MacPorts
+    // shell: '/opt/local/bin/bash',
+
+    // Homebrew
+    shell: '/usr/local/bin/bash',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
