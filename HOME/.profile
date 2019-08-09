@@ -41,7 +41,21 @@ export SHELL="/usr/local/bin/bash"
 # pkg-config
 # ----------------------------------------------------------------------------
 
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"
+# MacPorts
+# export PKG_CONFIG_PATH="/opt/local/lib/pkgconfig"
+
+# Homebrew
+export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig"
+
+# libffi is keg-only, which means it was not symlinked into /usr/local,
+# because some formulae require a newer version of libffi.
+#
+# For compilers to find libffi you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/libffi/lib"
+#
+# For pkg-config to find libffi you may need to set:
+#   export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$(brew --prefix libffi)/lib/pkgconfig"
 
 # ----------------------------------------------------------------------------
 # MacTEX
