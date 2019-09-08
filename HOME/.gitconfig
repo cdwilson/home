@@ -1,6 +1,6 @@
 [user]
 	name = Chris Wilson
-	email = chris@wilson.house
+	email = christopher.david.wilson@gmail.com
 [core]
 	editor = code --wait
 	excludesfile = /Users/chris/.gitignore
