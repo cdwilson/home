@@ -26,6 +26,7 @@
 	summary = true
 [diff]
 	tool = Kaleidoscope
+	submodule = log
 [difftool "sourcetree"]
 	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -39,6 +40,7 @@
 	httpd = webrick
 [push]
 	default = simple
+	recurseSubmodules = check
 [difftool "Kaleidoscope"]
 	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
@@ -60,3 +62,7 @@
 	required = true
 [include]
 	path = ~/.gitincludes
+[status]
+	submodulesummary = 1
+[submodule]
+	recurse = true
