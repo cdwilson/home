@@ -1,4 +1,2 @@
 [includeIf "gitdir:~/Flying_Camp_Design/"]
 	path = ~/Flying_Camp_Design/gitconfig.inc
-[includeIf "gitdir:~/Tempo_Automation/"]
-	path = ~/Tempo_Automation/gitconfig.inc
