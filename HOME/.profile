@@ -88,6 +88,7 @@ export PIPENV_SHELL_FANCY=true
 # ----------------------------------------------------------------------------
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/Library/Python/3.7/bin:$PATH"
 
 # ----------------------------------------------------------------------------
 # poetry
