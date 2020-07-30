@@ -182,7 +182,9 @@ fi
 # eval "$(pyenv init -)"
 
 # pyenv-virtualenv plugin
-eval "$(pyenv virtualenv-init -)"
+if command -v pyenv >/dev/null 2>&1; then
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # ----------------------------------------------------------------------------
 # rbenv initialization
@@ -328,7 +330,9 @@ __pyenv_ps1 ()
 }
 
 # Enable pyenv version in the prompt
-export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+if command -v pyenv >/dev/null 2>&1; then
+  export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+fi
 
 # ----------------------------------------------------------------------------
 # python virtualenv prompt
@@ -389,7 +393,9 @@ __virtualenv_ps1 ()
 }
 
 # Enable virtualenv display in the prompt
-export PROMPT_COMMAND="${PROMPT_COMMAND}"'__virtualenv_ps1 "" "" "${PROMPT_BLUE}virtualenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+if command -v pyenv >/dev/null 2>&1; then
+  export PROMPT_COMMAND="${PROMPT_COMMAND}"'__virtualenv_ps1 "" "" "${PROMPT_BLUE}virtualenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+fi
 
 # ----------------------------------------------------------------------------
 # rbenv prompt
