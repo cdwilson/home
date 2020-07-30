@@ -66,3 +66,5 @@
 	submodulesummary = 1
 [submodule]
 	recurse = true
+[pull]
+	rebase = false
