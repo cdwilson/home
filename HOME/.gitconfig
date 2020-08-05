@@ -1,6 +1,6 @@
 [user]
 	name = Chris Wilson
-	email = christopher.david.wilson@gmail.com
+	email = chris@tempoautomation.com
 [core]
 	editor = code --wait
 	excludesfile = /Users/chris/.gitignore
