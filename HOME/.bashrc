@@ -515,6 +515,14 @@ if command -v pipenv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
 fi
 
+pyenv-brew-relink() {
+    rm -f "$(pyenv root)"/versions/*-brew
+    for i in $(brew --cellar)/python*/* ; do
+        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
+    done
+    pyenv rehash
+}
+
 # ----------------------------------------------------------------------------
 # MacPorts Bash Completion
 # ----------------------------------------------------------------------------
