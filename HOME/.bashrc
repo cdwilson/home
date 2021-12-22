@@ -67,6 +67,8 @@ alias la="ls -a" # list all, includes dot files
 alias ll="ls -l" # long list, excludes dot files
 alias lla="ls -la" # long list all, includes dot files
 alias ppath="echo \$PATH | tr ':' '\n'"
+# https://support.typora.io/Use-Typora-From-Shell-or-cmd/
+alias typora="open -a typora"
 
 # ----------------------------------------------------------------------------
 # Colors
