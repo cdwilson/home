@@ -92,7 +92,10 @@ module.exports = {
     // shell: '/opt/local/bin/bash',
 
     // Homebrew
-    shell: '/usr/local/bin/bash',
+    // shell: '/usr/local/bin/bash',
+
+    // Homebrew (Apple Silicon)
+    shell: '/opt/homebrew/bin/bash',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used

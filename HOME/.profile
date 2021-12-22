@@ -8,7 +8,10 @@
 # export SHELL="/opt/local/bin/bash"
 
 # use bash from Homebrew (required for bash-completion)
-export SHELL="/usr/local/bin/bash"
+# export SHELL="/usr/local/bin/bash"
+
+# use bash from Homebrew (Apple Silicon, required for bash-completion)
+export SHELL="/opt/homebrew/bin/bash"
 
 # ----------------------------------------------------------------------------
 # Java
@@ -17,6 +20,12 @@ export SHELL="/usr/local/bin/bash"
 # export JAVA_HOME="$(/usr/libexec/java_home)"
 # export JAVA_HOME=/Library/Java/Home
 # export PATH="$JAVA_HOME/bin:$PATH"
+
+# ----------------------------------------------------------------------------
+# Homebrew (Apple Silicon)
+# ----------------------------------------------------------------------------
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ----------------------------------------------------------------------------
 # MacPorts paths
