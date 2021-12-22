@@ -56,21 +56,6 @@ export HISTSIZE=10000
 shopt -s histappend
 
 # ----------------------------------------------------------------------------
-# Aliases
-# ----------------------------------------------------------------------------
-
-# disk usage with human sizes and minimal depth
-alias du1='du -h -d 1'
-alias fn='find . -name'
-alias hi='history | tail -20'
-alias la="ls -a" # list all, includes dot files
-alias ll="ls -l" # long list, excludes dot files
-alias lla="ls -la" # long list all, includes dot files
-alias ppath="echo \$PATH | tr ':' '\n'"
-# https://support.typora.io/Use-Typora-From-Shell-or-cmd/
-alias typora="open -a typora"
-
-# ----------------------------------------------------------------------------
 # Colors
 # ----------------------------------------------------------------------------
 
@@ -148,6 +133,33 @@ export LS_OPTIONS='--color=auto'
 # export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # ----------------------------------------------------------------------------
+# Aliases
+# ----------------------------------------------------------------------------
+
+# disk usage with human sizes and minimal depth
+alias du1='du -h -d 1'
+alias fn='find . -name'
+alias hi='history | tail -20'
+alias la="ls -a" # list all, includes dot files
+alias ll="ls -l" # long list, excludes dot files
+alias lla="ls -la" # long list all, includes dot files
+alias ppath="echo \$PATH | tr ':' '\n'"
+# https://support.typora.io/Use-Typora-From-Shell-or-cmd/
+alias typora="open -a typora"
+
+# ----------------------------------------------------------------------------
+# Functions
+# ----------------------------------------------------------------------------
+
+pyenv-brew-relink() {
+    rm -f "$(pyenv root)"/versions/*-brew
+    for i in $(brew --cellar)/python*/* ; do
+        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
+    done
+    pyenv rehash
+}
+
+# ----------------------------------------------------------------------------
 # Editor
 # ----------------------------------------------------------------------------
 
@@ -204,6 +216,59 @@ fi
 # fi
 
 # ----------------------------------------------------------------------------
+# MacPorts Bash Completion
+# ----------------------------------------------------------------------------
+
+# See http://trac.macports.org/wiki/howto/bash-completion
+
+# if [[ `echo $BASH_VERSION` < 4.1 ]]; then
+#     echo
+#     echo "WARNING: bash-completion requires bash >= 4.1"
+#     echo
+#     echo "\$BASH_VERSION=$BASH_VERSION"
+#     echo
+#     cat <<EOF
+# The port bash-completion >=2.0 requires bash >=4.1; please make sure
+# you are using /opt/local/bin/bash by changing the preferences of your
+# terminal accordingly. If your version of bash is too old, the script
+# will not modify your shell environment and no extended completion
+# will be available.
+# EOF
+# else
+#     # Make sure you add this after any PATH manipulation as otherwise the
+#     # bash-completion will not work correctly.
+#     if [ -r "/opt/local/etc/bash_completion" ]; then
+#         . "/opt/local/etc/bash_completion"
+#     fi
+# fi
+
+# ----------------------------------------------------------------------------
+# Homebrew Bash Completion
+# ----------------------------------------------------------------------------
+if [[ `echo $BASH_VERSION` < 4.2 ]]; then
+    echo
+    echo "WARNING: bash-completion requires bash >= 4.2"
+    echo
+    echo "\$BASH_VERSION=$BASH_VERSION"
+    echo
+else
+    # Make sure you add this after any PATH manipulation as otherwise the
+    # bash-completion will not work correctly.
+    if type brew &>/dev/null; then
+        HOMEBREW_PREFIX="$(brew --prefix)"
+        if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
+        then
+            source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+        else
+            for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
+            do
+            [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+            done
+        fi
+    fi
+fi
+
+# ----------------------------------------------------------------------------
 # Begin Prompt
 # ----------------------------------------------------------------------------
 
@@ -257,9 +322,9 @@ printf -v __printf_supports_v -- '%s' yes >/dev/null 2>&1
 # fi
 
 # source git-prompt.sh to enable __git_ps1 (Homebrew)
-if [ -f `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
-    . `brew --prefix`/etc/bash_completion.d/git-prompt.sh
-fi
+# if [ -f `brew --prefix`/etc/bash_completion.d/git-prompt.sh ]; then
+#     . `brew --prefix`/etc/bash_completion.d/git-prompt.sh
+# fi
 
 # Enable git status in the prompt
 export PROMPT_COMMAND="${PROMPT_COMMAND}"'__git_ps1 "" "" "${PROMPT_BLUE}git:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
@@ -513,56 +578,4 @@ fi
 
 if command -v pipenv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
-fi
-
-pyenv-brew-relink() {
-    rm -f "$(pyenv root)"/versions/*-brew
-    for i in $(brew --cellar)/python*/* ; do
-        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
-    done
-    pyenv rehash
-}
-
-# ----------------------------------------------------------------------------
-# MacPorts Bash Completion
-# ----------------------------------------------------------------------------
-
-# See http://trac.macports.org/wiki/howto/bash-completion
-
-# if [[ `echo $BASH_VERSION` < 4.1 ]]; then
-#     echo
-#     echo "WARNING: bash-completion requires bash >= 4.1"
-#     echo
-#     echo "\$BASH_VERSION=$BASH_VERSION"
-#     echo
-#     cat <<EOF
-# The port bash-completion >=2.0 requires bash >=4.1; please make sure
-# you are using /opt/local/bin/bash by changing the preferences of your
-# terminal accordingly. If your version of bash is too old, the script
-# will not modify your shell environment and no extended completion
-# will be available.
-# EOF
-# else
-#     # Make sure you add this after any PATH manipulation as otherwise the
-#     # bash-completion will not work correctly.
-#     if [ -r "/opt/local/etc/bash_completion" ]; then
-#         . "/opt/local/etc/bash_completion"
-#     fi
-# fi
-
-# ----------------------------------------------------------------------------
-# Homebrew Bash Completion
-# ----------------------------------------------------------------------------
-if [[ `echo $BASH_VERSION` < 4.1 ]]; then
-    echo
-    echo "WARNING: bash-completion requires bash >= 4.1"
-    echo
-    echo "\$BASH_VERSION=$BASH_VERSION"
-    echo
-else
-    # Make sure you add this after any PATH manipulation as otherwise the
-    # bash-completion will not work correctly.
-    if [ -r "/usr/local/etc/profile.d/bash_completion.sh" ]; then
-        . "/usr/local/etc/profile.d/bash_completion.sh"
-    fi
 fi
