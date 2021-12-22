@@ -140,7 +140,7 @@ export VAGRANT_VMWARE_CLONE_DIRECTORY="~/Virtual Machines"
 # Rust/Cargo
 # ----------------------------------------------------------------------------
 
-export PATH="$HOME/.cargo/bin:$PATH"
+. "$HOME/.cargo/env"
 
 # ----------------------------------------------------------------------------
 # rshell (MicroPython)
