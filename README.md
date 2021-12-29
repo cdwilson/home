@@ -10,7 +10,7 @@ Version control and automatic management of user files in `$HOME`
 
 [home][] uses [GNU Stow][] and [Git][] to manage revision controlled files in your home directory (.dotfiles, scripts, etc). Stow is used to automatically maintain all the symbolic links in the user's `$HOME` directory that resolve to actual revision controlled files in the `HOME` directory of this repository.
 
-In addition, there are some other goodies included (like my [Terminal.app](#macos-terminalapp) profile for Mac).
+In addition, there are some other goodies included (like my [Terminal.app](#terminal-setup) profile for Mac).
 
 
 ## Motivation
@@ -22,7 +22,7 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
 
 ## Setup
 
-* Install `stow` (make sure to use a recent version that supports `--adopt`)
+1. Install `stow` (make sure to use a recent version that supports `--adopt`)
 
     ```bash
     # via Homebrew for Mac
@@ -35,63 +35,68 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
     sudo apt-get install stow
     ```
 
-* Change to `$HOME` directory
+2. Change to `$HOME` directory
 
     ```bash
     cd ~
     ```
 
-* Checkout this repository as `$HOME/.home`
+3. Checkout this repository as `$HOME/.home`
 
     ```bash
     git clone git@github.com:cdwilson/home.git .home
     ```
 
-* Change to `.home` directory
+4. Change to `.home` directory
 
     ```bash
     cd .home
     ```
 
-* Run `setup.sh` to install the git `post-commit` hook. This will also automatically create symlinks between the files in `$HOME/.home/HOME/` and your `$HOME` directory.  It will prompt for permission to move ("adopt") any real files in `$HOME` (i.e. existing `.bash_profile`, `.bashrc`, etc) into the `$HOME/.home/HOME/` directory, and replace them with a symlink (see [How it works](#how-it-works) below).
+5. Run `setup.sh` to install the git `post-commit` hook. This will also automatically create symlinks between the files in `$HOME/.home/HOME/` and your `$HOME` directory.  It will prompt for permission to move ("adopt") any real files in `$HOME` (i.e. existing `.bash_profile`, `.bashrc`, etc) into the `$HOME/.home/HOME/` directory, and replace them with a symlink (see [How it works](#how-it-works) below).
 
     ```bash
     ./setup.sh
     ```
 
-* Determine any changes between the newly adopted files and the previous revisions of those files stored in the repository
+6. Determine any changes between the newly adopted files and the previous revisions of those files stored in the repository
 
     ```bash
     git status
     ```
 
-* Add any adopted file to keep the version moved from `$HOME`
+7. Add any adopted file to keep the version moved from `$HOME`
 
     ```bash
     git add <any changed files go here>
     ```
 
-* Revert any adopted file to replace the version moved from `$HOME` with the version checked into the repository
+8. Revert any adopted file to replace the version moved from `$HOME` with the version checked into the repository
 
     ```bash
     git checkout <any changed files go here>
     ```
 
-* Commit your changes
+9. Commit your changes
 
     ```bash
     git commit -m "<describe your changes here>"
     ```
 
-* You're done! The git `post-commit` hook will automatically update any symlinks in `$HOME` to point to the files in `$HOME/.home/HOME/`
+10. You're done! The git `post-commit` hook will automatically update any symlinks in `$HOME` to point to the files in `$HOME/.home/HOME/`
 
 
 ## Usage
 
 Now that everything has been set up, keeping the files in `$HOME` revision controlled is pretty simple:
 
-* Any existing files already tracked in `$HOME/.home/HOME/` can be edited directly or by opening their symlink in your favorite editor.
+* Any existing files already tracked in `$HOME/.home/HOME/` can be edited directly or by opening their symlink in `$HOME` in your favorite editor.
+
 * Tracking new files in the repository is as simple as copying them from `$HOME` into `$HOME/.home/HOME/`, and committing them into the repository.  The git `post-commit` hook will automatically convert the file in `$HOME` into a symlink.
+
+  ![usage](images/usage.png)
+
+  
 
 
 ## How it works
@@ -126,40 +131,11 @@ There is a Git `post-commit` installed by `setup.sh` to run Stow automatically a
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
-## macOS Login Shell
-
-On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
-
-Right click on your user account and select "Advanced Options...":
-
-![users_and_groups](images/users_and_groups.png)
-
-Change the Login shell to the full path of your shell:
-
-![advanced_options](images/advanced_options.png)
-
-Add your login shell to `/etc/shells`:
-
-```
-# List of acceptable shells for chpass(1).
-# Ftpd will not allow users to connect who are not using
-# one of these shells.
-
-/bin/bash
-/bin/csh
-/bin/dash
-/bin/ksh
-/bin/sh
-/bin/tcsh
-/bin/zsh
-/opt/homebrew/bin/bash <-- Add your shell here
-```
-
-## macOS Terminal.app
+## Terminal Setup
 
 ![cdwilson.terminal](images/cdwilson.terminal.png)
 
-1. To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
+1. To use the macOS Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
 
 2. To use the prompt shown in the photo above, install https://starship.rs/:
 
@@ -194,10 +170,38 @@ Add your login shell to `/etc/shells`:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
    ```
 
-4. Make sure to configure the Terminal.app preferences so that shells open with the default login shell:
+4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
 
 ![terminal_preferences](images/terminal_preferences.png)
 
+## macOS Login Shell
+
+On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
+
+Right click on your user account and select "Advanced Options...":
+
+![users_and_groups](images/users_and_groups.png)
+
+Change the Login shell to the full path of your shell:
+
+![advanced_options](images/advanced_options.png)
+
+Add your login shell to `/etc/shells`:
+
+```
+# List of acceptable shells for chpass(1).
+# Ftpd will not allow users to connect who are not using
+# one of these shells.
+
+/bin/bash
+/bin/csh
+/bin/dash
+/bin/ksh
+/bin/sh
+/bin/tcsh
+/bin/zsh
+/opt/homebrew/bin/bash <-- Add your shell here
+```
 
 ## Development
 
