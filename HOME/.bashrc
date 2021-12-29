@@ -30,6 +30,9 @@ export HISTSIZE=10000
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+#  immediately add commands to history (don't wait for the end of each session)
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
 # ------------------------------------------------------------------------------
 # Editor
 # ------------------------------------------------------------------------------
