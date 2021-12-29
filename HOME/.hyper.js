@@ -88,18 +88,18 @@ module.exports = {
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
     // shell: '/bin/bash',
     
-    // MacPorts
+    // MacPorts Bash
     // shell: '/opt/local/bin/bash',
 
-    // Homebrew
+    // Homebrew Bash
     // shell: '/usr/local/bin/bash',
 
-    // Homebrew (Apple Silicon)
-    shell: '/opt/homebrew/bin/bash',
+    // Homebrew Bash (Apple Silicon)
+    // shell: '/opt/homebrew/bin/bash',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
-    shellArgs: ['--login'],
+    // shellArgs: ['--login'],
 
     // for environment variables
     env: {},
@@ -129,6 +129,8 @@ module.exports = {
   plugins: [
     "hyperlinks",
     "hyperterm-base16-tomorrow-night",
+    "hyper-search",
+    "hyper-reorderable-tabs",
   ],
 
   // in development, you can create a directory under

@@ -8,26 +8,6 @@
 # Environment Configuration
 # ------------------------------------------------------------------------------
 
-# detect interactive shell
-case "$-" in
-    *i*)
-        INTERACTIVE=yes
-        ;;
-    *)
-        return
-        ;;
-esac
-
-# detect login shell
-case "$0" in
-    -*)
-        LOGIN=yes
-        ;;
-    *)
-        unset LOGIN
-        ;;
-esac
-
 if [ -r /etc/bashrc ]; then
     . /etc/bashrc
 fi
@@ -40,7 +20,7 @@ fi
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
 # filename completion ignores
-export FIGNORE="~:CVS:#:.pyc"
+export FIGNORE="~:CVS:#:.pyc:.bak"
 
 # history options
 export HISTCONTROL=ignoreboth
@@ -144,24 +124,6 @@ export LS_OPTIONS='--color=auto'
 # export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # ------------------------------------------------------------------------------
-# Functions
-# ------------------------------------------------------------------------------
-
-exists ()
-{
-    builtin type "$1" &>/dev/null
-}
-
-pyenv-brew-relink ()
-{
-    rm -f "$(pyenv root)"/versions/*-brew
-    for i in $(brew --cellar)/python*/* ; do
-        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
-    done
-    pyenv rehash
-}
-
-# ------------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------------
 
@@ -173,96 +135,19 @@ alias la="ls -a" # list all, includes dot files
 alias ll="ls -l" # long list, excludes dot files
 alias lla="ls -la" # long list all, includes dot files
 alias ppath="echo \$PATH | tr ':' '\n'"
+
 # https://support.typora.io/Use-Typora-From-Shell-or-cmd/
 alias typora="open -a typora"
 
-# ------------------------------------------------------------------------------
-# Shell
-# ------------------------------------------------------------------------------
-
-# Some tools (like bash completion) rely on the login shell instead of what the
-# terminal started. On macOS, the default login shell is zsh (i.e. $SHELL =
-# /bin/zsh), but my terminal is configured to use bash installed from homebrew
-# instead. Since the homebrew bash may get uninstalled or corrupted, I don't
-# want to change the login shell to use the homebrew bash. Instead of changing
-# the login shell for my user account, I just set $SHELL here instead. Also,
-# make sure to add this shell to /etc/shells.
-# https://trac.macports.org/wiki/howto/bash-completion
-
-# use bash from Homebrew
-# export SHELL="/usr/local/bin/bash"
-
-# use bash from Homebrew (Apple Silicon)
-export SHELL="/opt/homebrew/bin/bash"
-
-# ------------------------------------------------------------------------------
-# Homebrew
-# ------------------------------------------------------------------------------
-
-# Shell Environment (Apple Silicon)
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Homebrew pkg-config
-export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/lib/pkgconfig"
-
-# ------------------------------------------------------------------------------
-# libffi
-# ------------------------------------------------------------------------------
-
-# libffi is keg-only, which means it was not symlinked into /usr/local,
-# because some formulae require a newer version of libffi.
-#
-# For compilers to find libffi you may need to set:
-#   export LDFLAGS="-L/usr/local/opt/libffi/lib"
-#
-# For pkg-config to find libffi you may need to set:
-#   export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$(brew --prefix libffi)/lib/pkgconfig"
-
-# ------------------------------------------------------------------------------
-# anyenv
-# ------------------------------------------------------------------------------
-
-export PATH="$HOME/.anyenv/bin:$PATH"
-
-if exists anyenv; then
-    eval "$(anyenv init -)"
-fi
-
-# ------------------------------------------------------------------------------
-# pyenv-virtualenv
-# ------------------------------------------------------------------------------
-
-# pyenv-virtualenv plugin
-if exists pyenv; then
-    eval "$(pyenv virtualenv-init -)"
-fi
+# https://jira.atlassian.com/browse/SRCTREE-7794
+# https://jira.atlassian.com/browse/SRCTREE-3172
+alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 
 # ------------------------------------------------------------------------------
 # python virtualenv
 # ------------------------------------------------------------------------------
 
 # export VIRTUAL_ENV_DISABLE_PROMPT=true
-
-# ------------------------------------------------------------------------------
-# Vagrant
-# ------------------------------------------------------------------------------
-
-export VAGRANT_DEFAULT_PROVIDER="vmware_fusion"
-export VAGRANT_VMWARE_CLONE_DIRECTORY="~/Virtual Machines"
-
-# ------------------------------------------------------------------------------
-# Rust/Cargo
-# ------------------------------------------------------------------------------
-
-. "$HOME/.cargo/env"
-
-# ------------------------------------------------------------------------------
-# User paths
-# ------------------------------------------------------------------------------
-
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
 
 # ------------------------------------------------------------------------------
 # Homebrew Bash Completion
@@ -277,13 +162,13 @@ else
     # Make sure you add this after any PATH manipulation as otherwise the
     # bash-completion will not work correctly.
     if exists brew; then
-        if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
+        if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]
         then
-            source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+            . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
         else
-            for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
+            for COMPLETION in "$(brew --prefix)/etc/bash_completion.d/"*
             do
-            [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+            [[ -r "${COMPLETION}" ]] && . "${COMPLETION}"
             done
         fi
     fi
@@ -370,126 +255,126 @@ fi
 # pyenv prompt
 # ------------------------------------------------------------------------------
 
-# if exists pyenv; then
-#     # __pyenv_ps1 accepts 0 or 1 arguments (i.e., format string) when called
-#     # from PS1 using command substitution in this mode it prints text to add to
-#     # bash PS1 prompt
-#     # 
-#     # __pyenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
-#     # in that case it _sets_ PS1. The arguments are parts of a PS1 string. when
-#     # two arguments are given, the first is prepended and the second appended to
-#     # the state string when assigned to PS1. The optional third parameter will
-#     # be used as printf format string to further customize the output of the
-#     # pyenv_version string.
-#     __pyenv_ps1 ()
-#     {
-#         local pcmode=no
-#         local detached=no
-#         local ps1pc_start='\u@\h:\w '
-#         local ps1pc_end='\$ '
-#         local printf_format=' (%s)'
-#         local pyenv_version=$(pyenv version-name)
+if exists pyenv; then
+    # __pyenv_ps1 accepts 0 or 1 arguments (i.e., format string) when called
+    # from PS1 using command substitution in this mode it prints text to add to
+    # bash PS1 prompt
+    # 
+    # __pyenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND (pc)
+    # in that case it _sets_ PS1. The arguments are parts of a PS1 string. when
+    # two arguments are given, the first is prepended and the second appended to
+    # the state string when assigned to PS1. The optional third parameter will
+    # be used as printf format string to further customize the output of the
+    # pyenv_version string.
+    __pyenv_ps1 ()
+    {
+        local pcmode=no
+        local detached=no
+        local ps1pc_start='\u@\h:\w '
+        local ps1pc_end='\$ '
+        local printf_format=' (%s)'
+        local pyenv_version=$(pyenv version-name)
 
-#         case "$#" in
-#             2|3)
-#                 pcmode=yes
-#                 ps1pc_start="$1"
-#                 ps1pc_end="$2"
-#                 printf_format="${3:-${printf_format}}"
-#             ;;
-#             0|1)
-#                 printf_format="${1:-${printf_format}}"
-#             ;;
-#             *)
-#                 return
-#             ;;
-#         esac
+        case "$#" in
+            2|3)
+                pcmode=yes
+                ps1pc_start="$1"
+                ps1pc_end="$2"
+                printf_format="${3:-${printf_format}}"
+            ;;
+            0|1)
+                printf_format="${1:-${printf_format}}"
+            ;;
+            *)
+                return
+            ;;
+        esac
 
-#         # if [ "${pyenv_version}" != "system" ]; then
-#         if (pyenv local >/dev/null 2>&1); then
-#             if [ ${pcmode} = yes ]; then
-#                 if [ "${__printf_supports_v-}" != yes ]; then
-#                     pyenv_version=$(printf -- "${printf_format}" "${pyenv_version}")
-#                 else
-#                     printf -v pyenv_version -- "${printf_format}" "${pyenv_version}"
-#                 fi
-#                 PS1="${ps1pc_start}${pyenv_version}${ps1pc_end}"
-#             else
-#                 printf -- "${printf_format}" "${pyenv_version}"
-#             fi
-#         else
-#             if [ ${pcmode} = yes ]; then
-#                 # in PC mode PS1 always needs to be set
-#                 PS1="${ps1pc_start}${ps1pc_end}"
-#             fi
-#             return
-#         fi
-#     }
+        # if [ "${pyenv_version}" != "system" ]; then
+        if (pyenv local >/dev/null 2>&1); then
+            if [ ${pcmode} = yes ]; then
+                if [ "${__printf_supports_v-}" != yes ]; then
+                    pyenv_version=$(printf -- "${printf_format}" "${pyenv_version}")
+                else
+                    printf -v pyenv_version -- "${printf_format}" "${pyenv_version}"
+                fi
+                PS1="${ps1pc_start}${pyenv_version}${ps1pc_end}"
+            else
+                printf -- "${printf_format}" "${pyenv_version}"
+            fi
+        else
+            if [ ${pcmode} = yes ]; then
+                # in PC mode PS1 always needs to be set
+                PS1="${ps1pc_start}${ps1pc_end}"
+            fi
+            return
+        fi
+    }
 
-#     export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
-# fi
+    export PROMPT_COMMAND="${PROMPT_COMMAND}"'__pyenv_ps1 "" "" "${PROMPT_BLUE}pyenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+fi
 
 # ------------------------------------------------------------------------------
 # python virtualenv prompt
 # ------------------------------------------------------------------------------
 
-# if exists pyenv; then
-#     # __virtualenv_ps1 accepts 0 or 1 arguments (i.e., format string) when
-#     # called from PS1 using command substitution in this mode it prints text to
-#     # add to bash PS1 prompt
-#     # 
-#     # __virtualenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND
-#     # (pc) in that case it _sets_ PS1. The arguments are parts of a PS1 string.
-#     # when two arguments are given, the first is prepended and the second
-#     # appended to the state string when assigned to PS1. The optional third
-#     # parameter will be used as printf format string to further customize the
-#     # output of the virtualenv_name string.
-#     __virtualenv_ps1 ()
-#     {
-#         local pcmode=no
-#         local detached=no
-#         local ps1pc_start='\u@\h:\w '
-#         local ps1pc_end='\$ '
-#         local printf_format=' (%s)'
-#         local virtualenv_name="\$(basename '$VIRTUAL_ENV')"
+if exists pyenv; then
+    # __virtualenv_ps1 accepts 0 or 1 arguments (i.e., format string) when
+    # called from PS1 using command substitution in this mode it prints text to
+    # add to bash PS1 prompt
+    # 
+    # __virtualenv_ps1 requires 2 or 3 arguments when called from PROMPT_COMMAND
+    # (pc) in that case it _sets_ PS1. The arguments are parts of a PS1 string.
+    # when two arguments are given, the first is prepended and the second
+    # appended to the state string when assigned to PS1. The optional third
+    # parameter will be used as printf format string to further customize the
+    # output of the virtualenv_name string.
+    __virtualenv_ps1 ()
+    {
+        local pcmode=no
+        local detached=no
+        local ps1pc_start='\u@\h:\w '
+        local ps1pc_end='\$ '
+        local printf_format=' (%s)'
+        local virtualenv_name="\$(basename '$VIRTUAL_ENV')"
 
-#         case "$#" in
-#             2|3)
-#                 pcmode=yes
-#                 ps1pc_start="$1"
-#                 ps1pc_end="$2"
-#                 printf_format="${3:-${printf_format}}"
-#             ;;
-#             0|1)
-#                 printf_format="${1:-${printf_format}}"
-#             ;;
-#             *)
-#                 return
-#             ;;
-#         esac
+        case "$#" in
+            2|3)
+                pcmode=yes
+                ps1pc_start="$1"
+                ps1pc_end="$2"
+                printf_format="${3:-${printf_format}}"
+            ;;
+            0|1)
+                printf_format="${1:-${printf_format}}"
+            ;;
+            *)
+                return
+            ;;
+        esac
 
-#         if [ -n "${VIRTUAL_ENV}" ] && [ -z "${VIRTUAL_ENV_DISABLE_PROMPT}" ]; then
-#             if [ ${pcmode} = yes ]; then
-#                 if [ "${__printf_supports_v-}" != yes ]; then
-#                     virtualenv_name=$(printf -- "${printf_format}" "${virtualenv_name}")
-#                 else
-#                     printf -v virtualenv_name -- "${printf_format}" "${virtualenv_name}"
-#                 fi
-#                 PS1="${ps1pc_start}${virtualenv_name}${ps1pc_end}"
-#             else
-#                 printf -- "${printf_format}" "${virtualenv_name}"
-#             fi
-#         else
-#             if [ ${pcmode} = yes ]; then
-#                 # in PC mode PS1 always needs to be set
-#                 PS1="${ps1pc_start}${ps1pc_end}"
-#             fi
-#             return
-#         fi
-#     }
+        if [ -n "${VIRTUAL_ENV}" ] && [ -z "${VIRTUAL_ENV_DISABLE_PROMPT}" ]; then
+            if [ ${pcmode} = yes ]; then
+                if [ "${__printf_supports_v-}" != yes ]; then
+                    virtualenv_name=$(printf -- "${printf_format}" "${virtualenv_name}")
+                else
+                    printf -v virtualenv_name -- "${printf_format}" "${virtualenv_name}"
+                fi
+                PS1="${ps1pc_start}${virtualenv_name}${ps1pc_end}"
+            else
+                printf -- "${printf_format}" "${virtualenv_name}"
+            fi
+        else
+            if [ ${pcmode} = yes ]; then
+                # in PC mode PS1 always needs to be set
+                PS1="${ps1pc_start}${ps1pc_end}"
+            fi
+            return
+        fi
+    }
 
-#     export PROMPT_COMMAND="${PROMPT_COMMAND}"'__virtualenv_ps1 "" "" "${PROMPT_BLUE}virtualenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
-# fi
+    export PROMPT_COMMAND="${PROMPT_COMMAND}"'__virtualenv_ps1 "" "" "${PROMPT_BLUE}virtualenv:${PROMPT_RESET} %s\n";PS1_PC="${PS1_PC}${PS1}";'
+fi
 
 # ------------------------------------------------------------------------------
 # rbenv prompt
