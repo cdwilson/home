@@ -31,7 +31,7 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
     # via MacPorts for Mac
     sudo port install stow
     
-    # via apt-get for Linux
+    # via apt-get for Ubuntu Linux
     sudo apt-get install stow
     ```
 
@@ -157,11 +157,44 @@ Add your login shell to `/etc/shells`:
 
 ## macOS Terminal.app
 
-To use the Terminal.app profile shown in the photo below, just double click the `terminal/cdwilson.terminal` file in Finder.
-
 ![cdwilson.terminal](images/cdwilson.terminal.png)
 
-Make sure to configure the Terminal.app preferences so that shells open with the default login shell:
+1. To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
+
+2. To use the prompt shown in the photo above, install https://starship.rs/:
+
+   ```sh
+   # via Homebrew for Mac
+   brew install starship
+   
+   # via MacPorts for Mac
+   sudo port install starship
+   
+   # via apt-get for Ubuntu Linux
+   sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+   ```
+
+2. To get started [configuring starship](https://starship.rs/config/#prompt), create the following file: `~/.config/starship.toml`
+
+   ```sh
+   mkdir -p ~/.config && touch ~/.config/starship.toml
+   ```
+
+3. To use the font shown in the photo above, install https://www.jetbrains.com/lp/mono/:
+
+   ```sh
+   # via Homebrew for Mac
+   brew tap homebrew/cask-fonts
+   brew install --cask font-jetbrains-mono
+   
+   # there is no MacPorts port for Mac, so install manually from
+   # https://github.com/JetBrains/JetBrainsMono/releases/latest
+   
+   # via apt-get for Ubuntu Linux
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+   ```
+
+4. Make sure to configure the Terminal.app preferences so that shells open with the default login shell:
 
 ![terminal_preferences](images/terminal_preferences.png)
 
