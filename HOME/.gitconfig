@@ -18,9 +18,12 @@
 	unstage = reset HEAD --
 	last = log -1 HEAD
 	stash-unapply = !git stash show -p | git apply -R
-	amend = commit --amend -C HEAD
+	amend = commit --amend --no-edit
 	gerrit = push origin HEAD:refs/for/master
 	prepush = log --graph --stat origin/master..
+	sdiff = !git diff && git submodule foreach 'git diff'
+	spush = push --recurse-submodules=on-demand
+	supdate = submodule update --remote --merge
 [merge]
 	tool = Kaleidoscope
 	summary = true
@@ -68,5 +71,7 @@
 	recurse = true
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main
 [init]
 	defaultBranch = main
