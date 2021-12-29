@@ -6,10 +6,6 @@ typora-copy-images-to: ./images
 
 Version control and automatic management of user files in `$HOME`
 
-## Table of Contents
-
-[TOC]
-
 ## Overview
 
 [home][] uses [GNU Stow][] and [Git][] to manage revision controlled files in your home directory (.dotfiles, scripts, etc). Stow is used to automatically maintain all the symbolic links in the user's `$HOME` directory that resolve to actual revision controlled files in the `HOME` directory of this repository.
