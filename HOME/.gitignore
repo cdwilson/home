@@ -4,3 +4,5 @@
 *.s#*
 *.b#*
 eagle.epf
+.cargo/credentials
+.cargo/credentials.toml
