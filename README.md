@@ -1,30 +1,25 @@
+---
+typora-copy-images-to: ./images
+---
+
 # home
 
-Version control and automatic management for user files in `$HOME`
+Version control and automatic management of user files in `$HOME`
 
 ## Table of Contents
 
-* [Overview](#overview)
-* [Motivation](#motivation)
-* [Setup](#setup)
-* [Usage](#usage)
-* [How it works](#how-it-works)
-    * [Git post-commit hook](#git-post-commit-hook)
-    * [update.sh](#update.sh)
-* [Terminal.app](#terminalapp)
-* [Development](#development)
-    * [License](#license)
+[TOC]
 
 ## Overview
 
-[home] uses [GNU Stow] and [Git] to manage revision controlled files in your home directory (.dotfiles, scripts, etc). Stow is used to automatically maintain all the symbolic links in the user's `$HOME` directory that resolve to actual revision controlled files in the `HOME` directory of this repository.
+[home][] uses [GNU Stow][] and [Git][] to manage revision controlled files in your home directory (.dotfiles, scripts, etc). Stow is used to automatically maintain all the symbolic links in the user's `$HOME` directory that resolve to actual revision controlled files in the `HOME` directory of this repository.
 
 In addition, there are some other goodies included (like my [Terminal.app](#terminalapp) profile for Mac).
 
 
 ## Motivation
 
-I wanted to be able to keep track of all the random files that end up in my `$HOME` directories on the machines I work on. To avoid turning my `$HOME` directory into a repository itself, I needed to isolate these files in a subdirectory of my `$HOME` directory (i.e. `$HOME/.home`), but I didn't want to have to manually manage symbolic links between the two.  It turns out that Stow works perfectly for this type of thing, hence the dependency on Stow.
+I wanted to be able to keep track of all the random files that end up in my `$HOME` directories on the machines I work on. To avoid turning my `$HOME` directory into a repository itself, I needed to isolate these files in a subdirectory of my `$HOME` directory (i.e. `$HOME/.home`), but I didn't want to have to manually manage symbolic links between the two.  It turns out that [GNU Stow][] works perfectly for this type of thing, hence the dependency on Stow.
 
 Obviously, you probably don't want to use my personal files "as is" on your own machine, so the idea with this repository is that it can serve as an example workflow that you can emulate or fork for your own purposes.
 
@@ -34,9 +29,12 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
 * Install `stow` (make sure to use a recent version that supports `--adopt`)
 
     ```bash
+    # via Homebrew for Mac
+    brew install stow
+    
     # via MacPorts for Mac
     sudo port install stow
-
+    
     # via apt-get for Linux
     sudo apt-get install stow
     ```
@@ -59,7 +57,7 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
     cd .home
     ```
 
-* Run `setup.sh` to install the git `post-commit` hook. This will also automatically create symlinks between the files in `$HOME/.home/HOME/` and your `$HOME` directory.  It will prompt for permission to move (adopt) any real files in `$HOME` (i.e. existing `.profile`, `.bashrc`, etc) into the `$HOME/.home/HOME/` directory, and replace them with a symlink (see [How it works](#how-it-works) below).
+* Run `setup.sh` to install the git `post-commit` hook. This will also automatically create symlinks between the files in `$HOME/.home/HOME/` and your `$HOME` directory.  It will prompt for permission to move ("adopt") any real files in `$HOME` (i.e. existing `.bash_profile`, `.bashrc`, etc) into the `$HOME/.home/HOME/` directory, and replace them with a symlink (see [How it works](#how-it-works) below).
 
     ```bash
     ./setup.sh
@@ -97,13 +95,12 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
 Now that everything has been set up, keeping the files in `$HOME` revision controlled is pretty simple:
 
 * Any existing files already tracked in `$HOME/.home/HOME/` can be edited directly or by opening their symlink in your favorite editor.
-
 * Tracking new files in the repository is as simple as copying them from `$HOME` into `$HOME/.home/HOME/`, and committing them into the repository.  The git `post-commit` hook will automatically convert the file in `$HOME` into a symlink.
 
 
 ## How it works
 
-There is no magic going on here--the whole thing boils down to two commands.  [GNU Stow] is used to automatically create symlinks in the user's `$HOME` directory that point to the revision controlled files in `$HOME/.home/HOME/`.
+There is no magic going on here—the whole thing boils down to two commands.  [GNU Stow][] is used to automatically create symlinks in the user's `$HOME` directory that point to the revision controlled files in `$HOME/.home/HOME/`.
 
 Stow is run in two passes:
 
@@ -113,7 +110,7 @@ Stow is run in two passes:
     stow --adopt HOME
     ```
 
-    **IMPORTANT:** this first pass is run with the Stow `--adopt` option. If Stow finds a file in the user's `$HOME` directory with the same filename as a file in `$HOME/.home/HOME/`, it will *move* (adopt) the file from the user's `$HOME` directory into `$HOME/.home/HOME/` and replace it with a symbolic link in `$HOME`. It will overwrite any existing files in `$HOME/.home/HOME/` without asking! While this is normally the behavior we want, if you're not careful, it has the potential to overwrite any unstaged changes in the repository. If you don't want this behavior simply remove `--adopt` from the command in the hook file.
+    **IMPORTANT:** this first pass is run with the Stow `--adopt` option. If Stow finds a file in the user's `$HOME` directory with the same filename as a file in `$HOME/.home/HOME/`, it will *move* (adopt) the file from the user's `$HOME` directory into `$HOME/.home/HOME/` and replace it with a symbolic link in `$HOME`. **It will overwrite any existing files in `$HOME/.home/HOME/` without asking!** While this is normally the behavior we want, if you're not careful, it has the potential to overwrite any unstaged changes in the repository. If you don't want this behavior simply remove `--adopt` from the command in the hook file.
 
 2. Second, Stow is re-run with the `-R` option. This causes Stow to "restow" all the files in `HOME` ensuring any stale links are pruned.
 
@@ -133,22 +130,50 @@ There is a Git `post-commit` installed by `setup.sh` to run Stow automatically a
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
+## macOS Login Shell
 
-## Terminal.app
+On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
 
-![][cdwilson.terminal]
+Right click on your user account and select "Advanced Options...":
+
+![users_and_groups](images/users_and_groups.png)
+
+Change the Login shell to the full path of your shell:
+
+![advanced_options](images/advanced_options.png)
+
+Add your login shell to `/etc/shells`:
+
+```
+# List of acceptable shells for chpass(1).
+# Ftpd will not allow users to connect who are not using
+# one of these shells.
+
+/bin/bash
+/bin/csh
+/bin/dash
+/bin/ksh
+/bin/sh
+/bin/tcsh
+/bin/zsh
+/opt/homebrew/bin/bash <-- Add your shell here
+```
+
+## macOS Terminal.app
+
+![cdwilson.terminal](images/cdwilson.terminal.png)
 
 To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
 
 
 ## Development
 
-[home] is hosted by [GitHub]
+[home][] is hosted by [GitHub][]
 
-Please feel free to submit pull requests and file bugs on the [issue tracker].
+Please feel free to submit pull requests and file bugs on the [issue tracker][].
 
 
-### License
+## License
 
 The MIT License (MIT)
 
@@ -173,9 +198,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-[GitHub]: http://github.com
-[home]: http://github.com/cdwilson/home
-[issue tracker]: http://github.com/cdwilson/home/issues
-[GNU Stow]: http://www.gnu.org/software/stow/
-[Git]: http://git-scm.com/
-[cdwilson.terminal]: images/cdwilson.terminal.png "cdwilson Terminal.app preferences"
+[GitHub]: http://github.com	"GitHub"
+[home]: http://github.com/cdwilson/home	"home"
+[issue tracker]: http://github.com/cdwilson/home/issues	"issue tracker"
+[GNU Stow]: http://www.gnu.org/software/stow/	"GNU Stow"
+[Git]: http://git-scm.com/	"Git"
