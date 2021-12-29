@@ -63,8 +63,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[include]
-	path = ~/.gitincludes
+[includeIf "gitdir:~/Flying_Camp_Design/"]
+	path = ~/.gitconfigs/flying_camp_design.gitconfig
 [status]
 	submodulesummary = 1
 [submodule]
