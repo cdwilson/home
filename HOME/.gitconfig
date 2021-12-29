@@ -75,3 +75,5 @@
 	defaultBranch = main
 [init]
 	defaultBranch = main
+[fetch]
+	prune = true
