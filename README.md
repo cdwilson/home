@@ -10,7 +10,7 @@ Version control and automatic management of user files in `$HOME`
 
 [home][] uses [GNU Stow][] and [Git][] to manage revision controlled files in your home directory (.dotfiles, scripts, etc). Stow is used to automatically maintain all the symbolic links in the user's `$HOME` directory that resolve to actual revision controlled files in the `HOME` directory of this repository.
 
-In addition, there are some other goodies included (like my [Terminal.app](#terminalapp) profile for Mac).
+In addition, there are some other goodies included (like my [Terminal.app](#macos-terminalapp) profile for Mac).
 
 
 ## Motivation
