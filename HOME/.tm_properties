@@ -1,2 +1,0 @@
-include = "{$include,.*}"
-exclude = "{$exclude,.DS_Store}"

@@ -1,1 +1,0 @@
-This directory may contain 16x16 icons in png format.
