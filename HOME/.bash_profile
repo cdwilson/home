@@ -64,15 +64,15 @@ esac
 # Also, make sure to add the shell to /etc/shells (see
 # https://trac.macports.org/wiki/howto/bash-completion)
 
-if exists brew; then
-    case $(os_type) in
-        darwin*)
-            export SHELL="$(brew --prefix)/bin/bash"
-            ;;
-        *)
-            ;;
-    esac
-fi
+# if exists brew; then
+#     case $(os_type) in
+#         darwin*)
+#             export SHELL="$(brew --prefix)/bin/bash"
+#             ;;
+#         *)
+#             ;;
+#     esac
+# fi
 
 # ------------------------------------------------------------------------------
 # pkg-config
@@ -103,10 +103,8 @@ fi
 # anyenv
 # ------------------------------------------------------------------------------
 
-if exists 
-export PATH="$HOME/.anyenv/bin:$PATH"
-
-if exists anyenv; then
+if exists "$HOME/.anyenv/bin/anyenv"; then
+    export PATH="$HOME/.anyenv/bin:$PATH"
     eval "$(anyenv init -)"
 fi
 
