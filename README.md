@@ -157,9 +157,9 @@ Add your login shell to `/etc/shells`:
 
 ## macOS Terminal.app
 
-![cdwilson.terminal](images/cdwilson.terminal.png)
+To use the Terminal.app profile shown in the photo below, just double click the `terminal/cdwilson.terminal` file in Finder.
 
-To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
+![cdwilson.terminal](images/cdwilson.terminal.png)
 
 Make sure to configure the Terminal.app preferences so that shells open with the default login shell:
 
