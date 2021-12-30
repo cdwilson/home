@@ -6,7 +6,7 @@ chmod +x setup.sh
 chmod +x update.sh
 
 echo "Installing post-commit hook..."
-pushd .git/hooks/ > /dev/null
+cd .git/hooks/ > /dev/null
 if [ -h post-commit ]; then
     while true; do
         read -p "Do you wish overwrite the existing post-commit symlink? " yn
@@ -44,6 +44,6 @@ symlink? " yn
 else
     ln -s ../../git/hooks/post-commit post-commit
 fi
-popd > /dev/null
+cd - > /dev/null
 
 ./update.sh
