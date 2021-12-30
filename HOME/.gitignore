@@ -6,5 +6,5 @@
 eagle.epf
 .cargo/credentials
 .cargo/credentials.toml
-.ssh/
+.ssh/*
 !.ssh/config
