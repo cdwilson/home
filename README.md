@@ -22,17 +22,17 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
 
 ## Setup
 
-1. Install `stow` (make sure to use a recent version that supports `--adopt`)
+1. Install `stow` (make sure to use a recent version that supports `--adopt`) and `git`
 
     ```bash
     # via Homebrew for Mac
-    brew install stow
+    brew install stow git
     
     # via MacPorts for Mac
-    sudo port install stow
+    sudo port install stow git
     
     # via apt-get for Ubuntu Linux
-    sudo apt-get install stow
+    sudo apt-get install stow git curl
     ```
 
 2. Change to `$HOME` directory
