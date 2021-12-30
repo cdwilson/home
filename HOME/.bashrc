@@ -127,6 +127,20 @@ export LS_OPTIONS='--color=auto'
 # export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # ------------------------------------------------------------------------------
+# Functions
+# ------------------------------------------------------------------------------
+
+# https://stackoverflow.com/questions/30499795/how-can-i-make-homebrews-python-and-pyenv-live-together
+pyenv-brew-relink ()
+{
+    rm -f "$(pyenv root)"/versions/*-brew
+    for i in $(brew --cellar)/python*/* ; do
+        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
+    done
+    pyenv rehash
+}
+
+# ------------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------------
 

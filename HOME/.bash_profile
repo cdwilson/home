@@ -138,18 +138,10 @@ export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # ------------------------------------------------------------------------------
-# Functions
+# iTerm2 Shell Integration
 # ------------------------------------------------------------------------------
 
-# https://stackoverflow.com/questions/30499795/how-can-i-make-homebrews-python-and-pyenv-live-together
-pyenv-brew-relink ()
-{
-    rm -f "$(pyenv root)"/versions/*-brew
-    for i in $(brew --cellar)/python*/* ; do
-        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
-    done
-    pyenv rehash
-}
+test -e ~/.iterm2_shell_integration.bash && . ~/.iterm2_shell_integration.bash || true
 
 # ------------------------------------------------------------------------------
 # If this is an interactive shell include .bashrc
