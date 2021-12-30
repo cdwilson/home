@@ -10,7 +10,7 @@ Version control and automatic management of user files in `$HOME`
 
 [home][] uses [GNU Stow][] and [Git][] to manage revision controlled files in your home directory (.dotfiles, scripts, etc). Stow is used to automatically maintain all the symbolic links in the user's `$HOME` directory that resolve to actual revision controlled files in the `HOME` directory of this repository.
 
-In addition, there are some other goodies included (like my [Terminal.app](#terminal-setup) profile for Mac).
+In addition, there are some other goodies included (like my [Terminal.app](#macos-terminal-setup) profile for Mac).
 
 
 ## Motivation
@@ -131,60 +131,54 @@ There is a Git `post-commit` installed by `setup.sh` to run Stow automatically a
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
-## Terminal Setup
+## anyenv Setup
 
-![cdwilson.terminal](images/cdwilson.terminal.png)
+`anyenv` allows you to easily install [rbenv](https://github.com/rbenv/rbenv) style environment managers.
 
-1. To use the macOS Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
-
-2. To use the prompt shown in the photo above, install https://starship.rs/:
+1. Install https://github.com/anyenv/anyenv
 
    ```sh
-   # via Homebrew for Mac
-   brew install starship
-   
-   # via MacPorts for Mac
-   sudo port install starship
-   
-   # via apt-get for Ubuntu Linux
-   sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+   git clone https://github.com/anyenv/anyenv ~/.anyenv
+   anyenv install --init
    ```
 
-2. To get started [configuring starship](https://starship.rs/config/#prompt), create the following file: `~/.config/starship.toml`
+2. Install https://github.com/znz/anyenv-update and https://github.com/znz/anyenv-git
 
    ```sh
-   mkdir -p ~/.config && touch ~/.config/starship.toml
+   mkdir -p $(anyenv root)/plugins
+   git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
+   git clone https://github.com/znz/anyenv-git.git $(anyenv root)/plugins/anyenv-git
    ```
 
-3. To use the font shown in the photo above, install https://www.jetbrains.com/lp/mono/:
+3. Install https://github.com/pyenv/pyenv
 
    ```sh
-   # via Homebrew for Mac
-   brew tap homebrew/cask-fonts
-   brew install --cask font-jetbrains-mono
+   # dependencies for building python in Ubuntu Linux
+   # see https://github.com/pyenv/pyenv/wiki
+   sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
    
-   # there is no MacPorts port for Mac, so install manually from
-   # https://github.com/JetBrains/JetBrainsMono/releases/latest
-   
-   # via apt-get for Ubuntu Linux
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+   anyenv install pyenv
    ```
 
-4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
+4. Install https://github.com/pyenv/pyenv-virtualenv
 
-![terminal_preferences](images/terminal_preferences.png)
+```sh
+git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+```
 
-## macOS Login Shell
+## macOS Login Shell Setup
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
 
 Right click on your user account and select "Advanced Options...":
 
-![users_and_groups](images/users_and_groups.png)
+![macos_users_and_groups](images/macos_users_and_groups.png)
 
 Change the Login shell to the full path of your shell:
 
-![advanced_options](images/advanced_options.png)
+![macos_advanced_options](images/macos_advanced_options.png)
 
 Add your login shell to `/etc/shells`:
 
@@ -202,6 +196,68 @@ Add your login shell to `/etc/shells`:
 /bin/zsh
 /opt/homebrew/bin/bash <-- Add your shell here
 ```
+
+## macOS Terminal Setup
+
+![macos_terminal](images/macos_terminal.png)
+
+1. To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
+
+2. To use the prompt shown in the photo above, install https://starship.rs/:
+
+   ```sh
+   # via Homebrew for Mac
+   brew install starship
+   
+   # via MacPorts for Mac
+   sudo port install starship
+   ```
+   
+2. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
+
+3. To use the font shown in the photo above, install https://www.jetbrains.com/lp/mono/:
+
+   ```sh
+   # via Homebrew for Mac
+   brew tap homebrew/cask-fonts
+   brew install --cask font-jetbrains-mono
+   
+   # there is no MacPorts port for Mac, so install manually from
+   # https://github.com/JetBrains/JetBrainsMono/releases/latest
+   ```
+   
+4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
+
+![macos_terminal_preferences](images/macos_terminal_preferences.png)
+
+## Ubuntu Linux GNOME Terminal Setup
+
+![ubuntu_terminal](images/ubuntu_terminal.png)
+
+1. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
+
+   ```sh
+   git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
+   .config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
+   ```
+
+2. To use the prompt shown in the photo above, install https://starship.rs/:
+
+   ```sh
+   sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+   ```
+
+3. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
+
+4. To use the font shown in the photo above, install https://www.jetbrains.com/lp/mono/:
+
+   ```sh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+   ```
+
+5. Make sure to configure the GNOME Terminal preferences so that shells open as a login shell:
+
+   ![ubuntu_login_shell](images/ubuntu_login_shell.png)
 
 ## Development
 
