@@ -215,15 +215,15 @@ Add your login shell to `/etc/shells`:
    
 2. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
 
-3. To use the font shown in the photo above, install https://www.jetbrains.com/lp/mono/:
+3. To use the [JetBrains Mono](https://www.jetbrains.com/lp/mono/) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
    # via Homebrew for Mac
    brew tap homebrew/cask-fonts
-   brew install --cask font-jetbrains-mono
+   brew install --cask font-jetbrains-mono-nerd-font
    
    # there is no MacPorts port for Mac, so install manually from
-   # https://github.com/JetBrains/JetBrainsMono/releases/latest
+   # https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
    ```
    
 4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
@@ -249,11 +249,19 @@ Add your login shell to `/etc/shells`:
 
 3. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
 
-4. To use the font shown in the photo above, install https://www.jetbrains.com/lp/mono/:
+4. To use the [JetBrains Mono](https://www.jetbrains.com/lp/mono/) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+   mkdir -p ~/.local/share/fonts
+   unzip JetBrainsMono.zip -d .local/share/fonts/
+   cd .local/share/fonts/
+   rm *Windows*
+   cd ~
+   fc-cache -fv
    ```
+
+   ![ubuntu_custom_font](images/ubuntu_custom_font.png)
 
 5. Make sure to configure the GNOME Terminal preferences so that shells open as a login shell:
 
