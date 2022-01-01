@@ -215,15 +215,15 @@ Add your login shell to `/etc/shells`:
    
 2. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
 
-3. To use the [JetBrains Mono](https://www.jetbrains.com/lp/mono/) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
+3. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
    # via Homebrew for Mac
    brew tap homebrew/cask-fonts
-   brew install --cask font-jetbrains-mono-nerd-font
+   brew install --cask font-hasklug-nerd-font
    
    # there is no MacPorts port for Mac, so install manually from
-   # https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+   # https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hasklig.zip
    ```
    
 4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
@@ -249,13 +249,13 @@ Add your login shell to `/etc/shells`:
 
 3. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
 
-4. To use the [JetBrains Mono](https://www.jetbrains.com/lp/mono/) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
+4. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
-   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hasklig.zip
    mkdir -p ~/.local/share/fonts
-   unzip JetBrainsMono.zip -d .local/share/fonts/
-   cd .local/share/fonts/
+   unzip Hasklig.zip -d ~.local/share/fonts/
+   cd ~/.local/share/fonts/
    rm *Windows*
    cd ~
    fc-cache -fv
