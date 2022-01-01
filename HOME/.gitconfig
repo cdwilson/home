@@ -65,6 +65,8 @@
 	required = true
 [includeIf "gitdir:~/Flying_Camp_Design/"]
 	path = ~/.gitconfigs/flying_camp_design.gitconfig
+[includeIf "gitdir:~/Tempo_Automation/"]
+	path = ~/.gitconfigs/tempo_automation.gitconfig
 [status]
 	submodulesummary = 1
 [submodule]
