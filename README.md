@@ -164,9 +164,9 @@ If for some reason you need to update the symlinks in `$HOME` without actually c
 
 4. Install https://github.com/pyenv/pyenv-virtualenv
 
-```sh
-git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-```
+   ```sh
+   git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+   ```
 
 ## macOS Login Shell Setup
 
@@ -201,9 +201,7 @@ Add your login shell to `/etc/shells`:
 
 ![macos_terminal](images/macos_terminal.png)
 
-1. To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
-
-2. To use the prompt shown in the photo above, install https://starship.rs/:
+1. To use the prompt shown in the photo above, install https://starship.rs/:
 
    ```sh
    # via Homebrew for Mac
@@ -212,10 +210,10 @@ Add your login shell to `/etc/shells`:
    # via MacPorts for Mac
    sudo port install starship
    ```
-   
-2. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
 
-3. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
+2. To get started [configuring starship](https://starship.rs/config/#prompt), add your changes to `~/.config/starship.toml`
+
+3. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched "Hasklug" version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
    # via Homebrew for Mac
@@ -225,31 +223,26 @@ Add your login shell to `/etc/shells`:
    # there is no MacPorts port for Mac, so install manually from
    # https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hasklig.zip
    ```
-   
+
 4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
 
-![macos_terminal_preferences](images/macos_terminal_preferences.png)
+   ![macos_terminal_preferences](images/macos_terminal_preferences.png)
+
+5. To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
 
 ## Ubuntu Linux GNOME Terminal Setup
 
 ![ubuntu_terminal](images/ubuntu_terminal.png)
 
-1. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
-
-   ```sh
-   git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
-   .config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
-   ```
-
-2. To use the prompt shown in the photo above, install https://starship.rs/:
+1. To use the prompt shown in the photo above, install https://starship.rs/:
 
    ```sh
    sh -c "$(curl -fsSL https://starship.rs/install.sh)"
    ```
+   
+3. To get started [configuring starship](https://starship.rs/config/#prompt), add your changes to `~/.config/starship.toml`
 
-3. To get started [configuring starship](https://starship.rs/config/#prompt), change the following file: `~/.config/starship.toml`
-
-4. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
+4. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched "Hasklug" version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hasklig.zip
@@ -266,6 +259,13 @@ Add your login shell to `/etc/shells`:
 5. Make sure to configure the GNOME Terminal preferences so that shells open as a login shell:
 
    ![ubuntu_login_shell](images/ubuntu_login_shell.png)
+   
+   5. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
+   
+   ```sh
+   git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
+   .config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
+   ```
 
 ## Development
 
