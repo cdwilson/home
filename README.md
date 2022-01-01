@@ -240,9 +240,9 @@ Add your login shell to `/etc/shells`:
    sh -c "$(curl -fsSL https://starship.rs/install.sh)"
    ```
    
-3. To get started [configuring starship](https://starship.rs/config/#prompt), add your changes to `~/.config/starship.toml`
+2. To get started [configuring starship](https://starship.rs/config/#prompt), add your changes to `~/.config/starship.toml`
 
-4. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched "Hasklug" version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
+3. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched "Hasklug" version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
 
    ```sh
    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hasklig.zip
@@ -256,16 +256,16 @@ Add your login shell to `/etc/shells`:
 
    ![ubuntu_custom_font](images/ubuntu_custom_font.png)
 
-5. Make sure to configure the GNOME Terminal preferences so that shells open as a login shell:
+4. Make sure to configure the GNOME Terminal preferences so that shells open as a login shell:
 
    ![ubuntu_login_shell](images/ubuntu_login_shell.png)
    
-   5. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
-   
-   ```sh
-   git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
-   .config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
-   ```
+5. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
+
+```sh
+git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
+.config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
+```
 
 ## Development
 
