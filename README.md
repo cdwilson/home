@@ -172,30 +172,30 @@ If for some reason you need to update the symlinks in `$HOME` without actually c
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
 
-Right click on your user account and select "Advanced Options...":
+1. Right click on your user account and select "Advanced Options...":
 
-![macos_users_and_groups](images/macos_users_and_groups.png)
+   ![macos_users_and_groups](images/macos_users_and_groups.png)
 
-Change the Login shell to the full path of your shell:
+2. Change the Login shell to the full path of your shell:
 
-![macos_advanced_options](images/macos_advanced_options.png)
+   ![macos_advanced_options](images/macos_advanced_options.png)
 
-Add your login shell to `/etc/shells`:
+3. Add your login shell to `/etc/shells`:
 
-```
-# List of acceptable shells for chpass(1).
-# Ftpd will not allow users to connect who are not using
-# one of these shells.
-
-/bin/bash
-/bin/csh
-/bin/dash
-/bin/ksh
-/bin/sh
-/bin/tcsh
-/bin/zsh
-/opt/homebrew/bin/bash <-- Add your shell here
-```
+   ```
+   # List of acceptable shells for chpass(1).
+   # Ftpd will not allow users to connect who are not using
+   # one of these shells.
+   
+   /bin/bash
+   /bin/csh
+   /bin/dash
+   /bin/ksh
+   /bin/sh
+   /bin/tcsh
+   /bin/zsh
+   /opt/homebrew/bin/bash <-- Add your shell here
+   ```
 
 ## macOS Terminal Setup
 
