@@ -228,7 +228,7 @@ Add your login shell to `/etc/shells`:
 
    ![macos_terminal_preferences](images/macos_terminal_preferences.png)
 
-5. To use the Terminal.app profile shown in the photo above, just double click the `terminal/cdwilson.terminal` file in Finder.
+5. To use the Terminal.app profile shown in the photo above, just double click the [terminal/cdwilson.terminal](terminal/cdwilson.terminal) file in Finder.
 
 ## Ubuntu Linux GNOME Terminal Setup
 
@@ -262,10 +262,10 @@ Add your login shell to `/etc/shells`:
    
 5. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
 
-```sh
-git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
-.config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
-```
+   ```sh
+   git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
+   .config/base16-gnome-terminal/color-scripts/base16-tomorrow-night.sh
+   ```
 
 ## Development
 
