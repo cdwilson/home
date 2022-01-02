@@ -44,7 +44,7 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
 3. Checkout this repository as `$HOME/.home`
 
     ```bash
-    git clone git@github.com:cdwilson/home.git .home
+    git clone --recurse-submodules git@github.com:cdwilson/home.git .home
     ```
 
 4. Change to `.home` directory

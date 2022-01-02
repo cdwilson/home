@@ -1,22 +1,37 @@
 # The Bash personal interactive initialization file
 # (only read by a Bash shell that's both interactive and non-login)
+# https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
 
-# References:
-# http://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html
+# shellcheck shell=bash
+
+if [[ -r "${HOME}/.shell_functions" ]]; then
+    . "${HOME}/.shell_functions"
+fi
+
+# ------------------------------------------------------------------------------
+# Check if this shell is interactive
+# ------------------------------------------------------------------------------
+
+# https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html
+case "$-" in
+    *i*)
+        # This shell is interactive
+        ;;
+    *)
+        # This shell is not interactive
+        return
+        ;;
+esac
 
 # ------------------------------------------------------------------------------
 # Environment Configuration
 # ------------------------------------------------------------------------------
 
-if [ -r /etc/bashrc ]; then
-    . /etc/bashrc
-fi
-
 # enable en_US locale w/ utf-8 encodings if not already configured
-: ${LANG:="en_US.UTF-8"}
-: ${LANGUAGE:="en"}
-: ${LC_CTYPE:="en_US.UTF-8"}
-: ${LC_ALL:="en_US.UTF-8"}
+: "${LANG:="en_US.UTF-8"}"
+: "${LANGUAGE:="en"}"
+: "${LC_CTYPE:="en_US.UTF-8"}"
+: "${LC_ALL:="en_US.UTF-8"}"
 export LANG LANGUAGE LC_CTYPE LC_ALL
 
 # filename completion ignores
@@ -31,7 +46,7 @@ export HISTSIZE=10000
 shopt -s histappend
 
 #  immediately add commands to history (don't wait for the end of each session)
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a; history -c; history -r; ${PROMPT_COMMAND}"
 
 # ------------------------------------------------------------------------------
 # Editor
@@ -97,7 +112,7 @@ export SGR_BG_CYAN="46"
 export SGR_BG_WHITE="47"
 
 # Reset Color
-export COLOR_RESET="${ANSI_CSI}${SGR_FG_RESET}m"
+export COLOR_RESET="${ANSI_CSI}${SGR_RESET}m"
 
 # Normal Colors
 export COLOR_BLACK="${ANSI_CSI}${SGR_FG_BLACK}m"
@@ -127,20 +142,6 @@ export LS_OPTIONS='--color=auto'
 # export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # ------------------------------------------------------------------------------
-# Functions
-# ------------------------------------------------------------------------------
-
-# https://stackoverflow.com/questions/30499795/how-can-i-make-homebrews-python-and-pyenv-live-together
-pyenv-brew-relink ()
-{
-    rm -f "$(pyenv root)"/versions/*-brew
-    for i in $(brew --cellar)/python*/* ; do
-        ln -s -f "$i" "$(pyenv root)"/versions/${i##/*/}-brew
-    done
-    pyenv rehash
-}
-
-# ------------------------------------------------------------------------------
 # Aliases
 # ------------------------------------------------------------------------------
 
@@ -161,33 +162,33 @@ alias typora="open -a typora"
 alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 
 # ------------------------------------------------------------------------------
-# python virtualenv
-# ------------------------------------------------------------------------------
-
-# export VIRTUAL_ENV_DISABLE_PROMPT=true
-
-# ------------------------------------------------------------------------------
 # Homebrew Bash Completion
 # ------------------------------------------------------------------------------
-if [[ `echo $BASH_VERSION` < 4.1 ]]; then
-    echo
-    echo "WARNING: bash-completion@2 requires bash >= 4.1"
-    echo
-    echo "\$BASH_VERSION=$BASH_VERSION"
-    echo
-else
-    # Make sure you add this after any PATH manipulation as otherwise the
-    # bash-completion will not work correctly.
-    if exists brew; then
-        if [[ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]]
+
+if executable_exists brew; then
+    # bash version check copied from `starship init bash`
+    major="${BASH_VERSINFO[0]}"
+    minor="${BASH_VERSINFO[1]}"
+    if ((major > 4)) || { ((major == 4)) && ((minor >= 2)); }; then
+        # Make sure you add this after any PATH manipulation as otherwise the
+        # bash-completion will not work correctly.
+        if [[ -r "${HOMEBREW_PREFIX:?}/etc/profile.d/bash_completion.sh" ]]
         then
-            . "$(brew --prefix)/etc/profile.d/bash_completion.sh"
+            # shellcheck source=/dev/null
+            . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
         else
-            for COMPLETION in "$(brew --prefix)/etc/bash_completion.d/"*
+            for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
             do
+            # shellcheck source=/dev/null
             [[ -r "${COMPLETION}" ]] && . "${COMPLETION}"
             done
         fi
+    else
+        echo
+        echo "WARNING: Homebrew bash-completion@2 requires bash >= 4.2"
+        echo
+        echo "\$BASH_VERSION=${BASH_VERSION}"
+        echo
     fi
 fi
 
@@ -195,8 +196,9 @@ fi
 # pip Bash completion
 # ------------------------------------------------------------------------------
 
-if exists pip; then
-    eval "$(pip completion --bash)"
+if executable_exists pip; then
+    pip_completion_bash=$(pip completion --bash)
+    eval "${pip_completion_bash}"
 fi
 
 # ------------------------------------------------------------------------------
@@ -204,12 +206,17 @@ fi
 # ------------------------------------------------------------------------------
 
 # https://rust-lang.github.io/rustup/installation/index.html
-if exists rustup; then
-    eval "$(rustup completions bash)"
+if executable_exists rustup; then
+    rustup_completions_bash=$(rustup completions bash)
+    eval "${rustup_completions_bash}"
 fi
 
 # ------------------------------------------------------------------------------
-# Starship (https://starship.rs/)
+# Initialize Starship prompt
 # ------------------------------------------------------------------------------
 
-eval "$(starship init bash)"
+# https://starship.rs/guide/#%F0%9F%9A%80-installation
+if executable_exists starship; then
+    starship_init_bash=$(starship init bash)
+    eval "${starship_init_bash}"
+fi

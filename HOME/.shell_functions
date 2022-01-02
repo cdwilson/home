@@ -1,0 +1,85 @@
+# Shell functions for Bourne-compatible shells
+
+# shellcheck shell=sh
+
+# ------------------------------------------------------------------------------
+# Helper Functions
+# ------------------------------------------------------------------------------
+
+# Checks if a command exists (works for executables, builtins, aliases, and
+# functions)
+# https://stackoverflow.com/a/34143401
+command_exists ()
+{
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Checks if an executable exists (doesn't work for )
+# https://stackoverflow.com/a/26759734
+executable_exists ()
+(
+    cmd=$(command -v "$1")
+    [ -x "${cmd}" ]
+)
+
+# https://stackoverflow.com/a/18434831
+os_type ()
+{
+    uname | tr '[:upper:]' '[:lower:]'
+}
+
+# ------------------------------------------------------------------------------
+# Apple Silicon Helper Functions
+# ------------------------------------------------------------------------------
+
+# Macs with Apple Silicon (arm64) can run executables compiled for Intel
+# (x86_64) via the Rosetta translation process.  See this link for more details:
+# https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment
+
+case $(os_type) in
+    darwin*)
+        # https://stackoverflow.com/questions/65259300/detect-apple-silicon-from-command-line#comment124415881_65259353
+        # https://stackoverflow.com/a/37073155
+        cpu_is_apple_silicon ()
+        (
+            cpu=$(sysctl -n machdep.cpu.brand_string)
+            [ "${cpu#Apple}" != "${cpu}" ]
+        )
+
+        cpu_is_intel ()
+        (
+            cpu=$(sysctl -n machdep.cpu.brand_string)
+            [ "${cpu#Intel}" != "${cpu}" ]
+        )
+
+        # https://indiespark.top/software/detecting-apple-silicon-shell-script/
+        shell_is_translated ()
+        (
+            translated=$(sysctl -n sysctl.proc_translated)
+            [ "${translated}" = "1" ]
+        )
+
+        shell_is_native ()
+        (
+            translated=$(sysctl -n sysctl.proc_translated)
+            [ "${translated}" = "0" ]
+        )
+        ;;
+    *)
+        ;;
+esac
+
+# ------------------------------------------------------------------------------
+# Functions
+# ------------------------------------------------------------------------------
+
+# https://stackoverflow.com/questions/30499795/how-can-i-make-homebrews-python-and-pyenv-live-together
+pyenv_brew_relink ()
+{
+    pyenv_root=$(pyenv root)
+    rm -f "${pyenv_root}"/versions/*-brew
+    for i in "${HOMEBREW_CELLAR:?}"/python*/* ; do
+        ln -s -f "${i}" "${pyenv_root}/versions/${i##/*/}-brew"
+    done
+    pyenv rehash
+}
