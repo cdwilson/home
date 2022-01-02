@@ -1,0 +1,3 @@
+[submodule "HOME/.config/anyenv/anyenv-install"]
+	path = HOME/.config/anyenv/anyenv-install
+	url = https://github.com/anyenv/anyenv-install.git
