@@ -3,7 +3,7 @@
 # shellcheck shell=sh
 
 # ------------------------------------------------------------------------------
-# Helper Functions
+# Functions
 # ------------------------------------------------------------------------------
 
 # Checks if a command exists (works for executables, builtins, aliases, and
@@ -28,14 +28,9 @@ os_type ()
     uname | tr '[:upper:]' '[:lower:]'
 }
 
-# ------------------------------------------------------------------------------
-# Apple Silicon Helper Functions
-# ------------------------------------------------------------------------------
-
 # Macs with Apple Silicon (arm64) can run executables compiled for Intel
 # (x86_64) via the Rosetta translation process.  See this link for more details:
 # https://developer.apple.com/documentation/apple-silicon/about-the-rosetta-translation-environment
-
 case $(os_type) in
     darwin*)
         # https://stackoverflow.com/questions/65259300/detect-apple-silicon-from-command-line#comment124415881_65259353
@@ -68,18 +63,3 @@ case $(os_type) in
     *)
         ;;
 esac
-
-# ------------------------------------------------------------------------------
-# Functions
-# ------------------------------------------------------------------------------
-
-# https://stackoverflow.com/questions/30499795/how-can-i-make-homebrews-python-and-pyenv-live-together
-pyenv_brew_relink ()
-{
-    pyenv_root=$(pyenv root)
-    rm -f "${pyenv_root}"/versions/*-brew
-    for i in "${HOMEBREW_CELLAR:?}"/python*/* ; do
-        ln -s -f "${i}" "${pyenv_root}/versions/${i##/*/}-brew"
-    done
-    pyenv rehash
-}

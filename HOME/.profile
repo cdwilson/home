@@ -17,19 +17,19 @@ fi
 case $(os_type) in
     linux*)
         if executable_exists "${HOME}/.linuxbrew/bin/brew"; then
-            HOMEBREW_PREFIX="${HOME}/.linuxbrew"
+            HOMEBREW_BIN="${HOME}/.linuxbrew/bin/brew"
         elif executable_exists "/home/linuxbrew/.linuxbrew/bin/brew"; then
-            HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+            HOMEBREW_BIN="/home/linuxbrew/.linuxbrew/bin/brew"
         fi
         ;;
     darwin*)
         if cpu_is_apple_silicon && shell_is_native ; then
             if executable_exists "/opt/homebrew/bin/brew"; then
-                HOMEBREW_PREFIX="/opt/homebrew/"
+                HOMEBREW_BIN="/opt/homebrew/bin/brew"
             fi
         else
             if executable_exists "/usr/local/bin/brew"; then
-                HOMEBREW_PREFIX="/usr/local/"
+                HOMEBREW_BIN="/usr/local/bin/brew"
             fi
         fi
         ;;
@@ -37,8 +37,8 @@ case $(os_type) in
         ;;
 esac
 
-if executable_exists "${HOMEBREW_PREFIX}/bin/brew"; then
-    brew_shellenv=$("${HOMEBREW_PREFIX}/bin/brew" shellenv)
+if [ -n "${HOMEBREW_BIN}" ]; then
+    brew_shellenv=$("${HOMEBREW_BIN}" shellenv)
     eval "${brew_shellenv}"
 fi
 
@@ -55,9 +55,10 @@ fi
 # to match the shell started by the terminal, make sure to uncomment the code
 # below to ensure $SHELL is set correctly.
 #
-# Add your login shell to the file /etc/shells, otherwise it will be impossible
-# to use AppleScript to tell Terminal to execute scripts (like 'osascript -e
-# "tell application \"Terminal\" to do script \"echo hello\""').
+# Also, remember to add your login shell to the file /etc/shells, otherwise it
+# will be impossible to use AppleScript to tell Terminal to execute scripts
+# (like 'osascript -e "tell application \"Terminal\" to do script \"echo
+# hello\""').
 # See https://trac.macports.org/wiki/howto/bash-completion
 
 # case $(os_type) in
@@ -102,27 +103,22 @@ fi
 # anyenv
 # ------------------------------------------------------------------------------
 
-if executable_exists "${HOME}/.anyenv/bin/anyenv"; then
-    export PATH="${HOME}/.anyenv/bin:${PATH}"
-    anyenv_init=$(anyenv init -)
-    eval "${anyenv_init}"
+# if executable_exists "${HOME}/.anyenv/bin/anyenv"; then
+#     export PATH="${HOME}/.anyenv/bin:${PATH}"
+#     anyenv_init=$(anyenv init -)
+#     eval "${anyenv_init}"
+# fi
+
+# ------------------------------------------------------------------------------
+# pyenv
+# ------------------------------------------------------------------------------
+
+export PYENV_ROOT="/Users/chris/.anyenv/envs/pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
+if executable_exists pyenv; then
+    pyenv_init_path=$(pyenv init --path)
+    eval "${pyenv_init_path}"
 fi
-
-# ------------------------------------------------------------------------------
-# pyenv-virtualenv
-# ------------------------------------------------------------------------------
-
-# pyenv-virtualenv plugin
-if command_exists pyenv; then
-    pyenv_virtualenv_init=$(pyenv virtualenv-init -)
-    eval "${pyenv_virtualenv_init}"
-fi
-
-# ------------------------------------------------------------------------------
-# python virtualenv
-# ------------------------------------------------------------------------------
-
-# export VIRTUAL_ENV_DISABLE_PROMPT=true
 
 # ------------------------------------------------------------------------------
 # Rust/Cargo

@@ -5,27 +5,18 @@
 # shellcheck shell=bash
 
 # ------------------------------------------------------------------------------
-# Check if this shell is interactive
-# ------------------------------------------------------------------------------
-
-# https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html
-case "$-" in
-    *i*)
-        # This shell is interactive
-        ;;
-    *)
-        # This shell is not interactive
-        return
-        ;;
-esac
-
-# ------------------------------------------------------------------------------
 # Source shell functions
 # ------------------------------------------------------------------------------
 
-if [[ -r "${HOME}/.shell_functions" ]]; then
-    . "${HOME}/.shell_functions"
+if [[ -r "${HOME}/.bash_functions" ]]; then
+    . "${HOME}/.bash_functions"
 fi
+
+# ------------------------------------------------------------------------------
+# Silence deprecation warning on macOS
+# ------------------------------------------------------------------------------
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # ------------------------------------------------------------------------------
 # Environment Configuration
@@ -170,7 +161,7 @@ alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 # ------------------------------------------------------------------------------
 
 if executable_exists brew; then
-    # bash version check copied from `starship init bash`
+    # bash version check code copied from `starship init bash`
     major="${BASH_VERSINFO[0]}"
     minor="${BASH_VERSINFO[1]}"
     if ((major > 4)) || { ((major == 4)) && ((minor >= 2)); }; then
@@ -189,7 +180,9 @@ if executable_exists brew; then
         fi
     else
         echo
-        echo "WARNING: Homebrew bash-completion@2 requires bash >= 4.2"
+        echo "WARNING: Bash completion is unavailable."
+        echo
+        echo "Homebrew bash-completion@2 requires bash >= 4.2"
         echo
         echo "\$BASH_VERSION=${BASH_VERSION}"
         echo
@@ -197,9 +190,37 @@ if executable_exists brew; then
 fi
 
 # ------------------------------------------------------------------------------
+# python virtualenv
+# ------------------------------------------------------------------------------
+
+# export VIRTUAL_ENV_DISABLE_PROMPT=true
+
+# ------------------------------------------------------------------------------
+# pyenv
+# ------------------------------------------------------------------------------
+
+# At this point, the `pyenv` function may not have been defined yet and only the
+# executable exists in the $PATH, so use `executable_exists`
+if executable_exists pyenv; then
+    pyenv_init=$(pyenv init -)
+    eval "${pyenv_init}"
+fi
+
+# ------------------------------------------------------------------------------
+# pyenv-virtualenv
+# ------------------------------------------------------------------------------
+
+# Now, the pyenv function should exist, so use `function_exists`
+if function_exists pyenv; then
+    pyenv_virtualenv_init=$(pyenv virtualenv-init -)
+    eval "${pyenv_virtualenv_init}"
+fi
+
+# ------------------------------------------------------------------------------
 # pip Bash completion
 # ------------------------------------------------------------------------------
 
+# https://pip.pypa.io/en/stable/user_guide/#command-completion
 if executable_exists pip; then
     pip_completion_bash=$(pip completion --bash)
     eval "${pip_completion_bash}"
