@@ -16,3 +16,18 @@
 # Since starship doesn't support sh, and the only time this file is run is when
 # the shell is invoked as sh, just unset PROMPT_COMMAND.
 unset PROMPT_COMMAND
+
+# Starting in Ubuntu 6.10, the default system shell, /bin/sh, was changed to
+# dash (the Debian Almquist Shell).  The default login shell remains bash.
+# Opening a terminal from the menu or shortcut [crtl-alt-t] provides interactive
+# bash. A script run from the desktop or file manager, through the dialogue 'run
+# in terminal' will execute as POSIX dash.  See
+# https://wiki.ubuntu.com/DashAsBinSh for more details.  
+#
+# If an interactive shell is invoked as sh from an existing interactive bash
+# shell, PS1 will be inherited in the environment.  If the starship prompt was
+# initialized, PS1 will contain a bunch of terminal escape sequences that dash
+# doesn't support.  Since starship doesn't support sh, and the only time this
+# file is run is when the shell is invoked as sh, just set PS1 to something
+# supported by dash.
+PS1='$ '
