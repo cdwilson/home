@@ -3,6 +3,19 @@
 # shellcheck shell=sh
 
 # ------------------------------------------------------------------------------
+# Set ENV if bash is invoked as sh
+# ------------------------------------------------------------------------------
+
+# When invoked as an interactive shell with the name sh, Bash looks for the
+# variable ENV, expands its value if it is defined, and uses the expanded value
+# as the name of a file to read and execute. For more details, see
+# https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
+
+if [ -r "${HOME}/.shrc" ]; then
+    export ENV="${HOME}/.shrc"
+fi
+
+# ------------------------------------------------------------------------------
 # Source shell functions
 # ------------------------------------------------------------------------------
 

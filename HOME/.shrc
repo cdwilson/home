@@ -1,0 +1,18 @@
+# The POSIX sh shell personal interactive initialization script file.
+# When invoked as an interactive shell with the name sh, Bash looks for the
+# variable ENV, expands its value if it is defined, and uses the expanded value
+# as the name of a file to read and execute. For more details, see
+# https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
+
+# shellcheck shell=sh
+
+# If an interactive shell is invoked as sh from an existing interactive bash
+# shell, PROMPT_COMMAND will be inherited in the environment.  If the starship
+# prompt was initialized, PROMPT_COMMAND will contain "starship_precmd" and
+# you'll see an error like the following:
+#
+#   sh: starship_precmd: command not found
+#
+# Since starship doesn't support sh, and the only time this file is run is when
+# the shell is invoked as sh, just unset PROMPT_COMMAND.
+unset PROMPT_COMMAND
