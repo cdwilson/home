@@ -131,44 +131,48 @@ There is a Git `post-commit` installed by `setup.sh` to run Stow automatically a
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
-## anyenv Setup
+## System Setup & Dependencies
 
-`anyenv` allows you to easily install [rbenv](https://github.com/rbenv/rbenv) style environment managers.
+The instructions below detail the additional system setup and dependencies required to use the dotfiles in this repo.
 
-1. Install https://github.com/anyenv/anyenv
+### pyenv Setup
+
+[pyenv](https://github.com/pyenv/pyenv) is a [rbenv](https://github.com/rbenv/rbenv)-style environment manager that lets you easily install and switch between multiple versions of Python.
+
+1. Install `pyenv` using the [Basic GitHub Checkout](https://github.com/pyenv/pyenv#basic-github-checkout) instructions:
 
    ```sh
-   git clone https://github.com/anyenv/anyenv ~/.anyenv
-   anyenv install --init
+   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
    ```
 
-2. Install https://github.com/znz/anyenv-update and https://github.com/znz/anyenv-git
+2. Optionally, try to compile a dynamic Bash extension to speed up Pyenv. Don't worry if it fails; Pyenv will still work normally:
 
-   ```sh
-   mkdir -p $(anyenv root)/plugins
-   git clone https://github.com/znz/anyenv-update.git $(anyenv root)/plugins/anyenv-update
-   git clone https://github.com/znz/anyenv-git.git $(anyenv root)/plugins/anyenv-git
    ```
-
-3. Install https://github.com/pyenv/pyenv
-
-   ```sh
-   # dependencies for building python in Ubuntu Linux
-   # see https://github.com/pyenv/pyenv/wiki
-   sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
-   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   cd ~/.pyenv && src/configure && make -C src
+   ```
    
-   anyenv install pyenv
-   ```
-
-4. Install https://github.com/pyenv/pyenv-virtualenv
+2. Install [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin that lets you easily manage and automatically activate virtualenvs:
 
    ```sh
    git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
    ```
+   
+4. Install [dependencies](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) for building python:
 
-## macOS Login Shell Setup
+   ```sh
+   # dependencies for building python on Mac with Homebrew
+   brew install openssl readline sqlite3 xz zlib
+   
+   # dependencies for building python on Mac with MacPorts
+   sudo port install openssl readline sqlite3 xz zlib
+   
+   # dependencies for building python in Ubuntu Linux
+   sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   ```
+
+### macOS Login Shell Setup
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
 
@@ -197,7 +201,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
    /opt/homebrew/bin/bash <-- Add your shell here
    ```
 
-## macOS Terminal Setup
+### macOS Terminal Setup
 
 ![macos_terminal](images/macos_terminal.png)
 
@@ -230,7 +234,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
 
 5. To use the Terminal.app profile shown in the photo above, just double click the [terminal/cdwilson.terminal](terminal/cdwilson.terminal) file in Finder.
 
-## Ubuntu Linux GNOME Terminal Setup
+### Ubuntu Linux GNOME Terminal Setup
 
 ![ubuntu_terminal](images/ubuntu_terminal.png)
 

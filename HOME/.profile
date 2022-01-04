@@ -100,22 +100,15 @@ if executable_exists brew; then
 fi
 
 # ------------------------------------------------------------------------------
-# anyenv
-# ------------------------------------------------------------------------------
-
-# if executable_exists "${HOME}/.anyenv/bin/anyenv"; then
-#     export PATH="${HOME}/.anyenv/bin:${PATH}"
-#     anyenv_init=$(anyenv init -)
-#     eval "${anyenv_init}"
-# fi
-
-# ------------------------------------------------------------------------------
 # pyenv
 # ------------------------------------------------------------------------------
 
-export PYENV_ROOT="/Users/chris/.anyenv/envs/pyenv"
-export PATH="${PYENV_ROOT}/bin:${PATH}"
-if executable_exists pyenv; then
+# Manually set PYENV_ROOT for pyenv installed manually via Basic GitHub Checkout
+# https://github.com/pyenv/pyenv#basic-github-checkout
+export PYENV_ROOT="/Users/chris/.pyenv"
+
+if [ -d "${PYENV_ROOT}" ]; then
+    export PATH="${PYENV_ROOT}/bin:${PATH}"
     pyenv_init_path=$(pyenv init --path)
     eval "${pyenv_init_path}"
 fi
