@@ -105,7 +105,7 @@ fi
 
 # Manually set PYENV_ROOT for pyenv installed manually via Basic GitHub Checkout
 # https://github.com/pyenv/pyenv#basic-github-checkout
-export PYENV_ROOT="/Users/chris/.pyenv"
+export PYENV_ROOT="${HOME}/.pyenv"
 
 if [ -d "${PYENV_ROOT}" ]; then
     export PATH="${PYENV_ROOT}/bin:${PATH}"
