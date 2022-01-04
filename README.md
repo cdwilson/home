@@ -127,7 +127,7 @@ These commands must be run in this sequence and can not be combined (i.e. `stow 
 There is a Git `post-commit` installed by `setup.sh` to run Stow automatically after committing changes to the repository. This makes sure that the symbolic links in `$HOME` are kept up to date and any new files are actually moved into the repository (as opposed to accidentally leaving a copy in `$HOME` and a separate copy in the repository).  Under the hood, the `post-commit` hook just runs the two stow commands described above.
 
 
-### update.sh
+### `update.sh`
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
@@ -135,9 +135,9 @@ If for some reason you need to update the symlinks in `$HOME` without actually c
 
 The instructions below detail the additional system setup and dependencies required to use the dotfiles in this repo.
 
-### pyenv Setup
+### `pyenv` Setup
 
-[pyenv](https://github.com/pyenv/pyenv) is a [rbenv](https://github.com/rbenv/rbenv)-style environment manager that lets you easily install and switch between multiple versions of Python.
+[pyenv](https://github.com/pyenv/pyenv) is a [rbenv](https://github.com/rbenv/rbenv)-style version manager that lets you easily install and switch between multiple versions of Python.
 
 1. Install `pyenv` using the [Basic GitHub Checkout](https://github.com/pyenv/pyenv#basic-github-checkout) instructions:
 

@@ -1,4 +1,4 @@
-# The Bash personal interactive initialization file
+# The Bash shell personal interactive initialization script file.
 # (only read by a Bash shell that's both interactive and non-login)
 # https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
 
@@ -13,7 +13,7 @@ if [[ -r "${HOME}/.bash_functions" ]]; then
 fi
 
 # ------------------------------------------------------------------------------
-# Silence deprecation warning on macOS
+# Silence /bin/bash deprecation warning on macOS
 # ------------------------------------------------------------------------------
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
