@@ -135,6 +135,43 @@ If for some reason you need to update the symlinks in `$HOME` without actually c
 
 The instructions below detail the additional system setup and dependencies required to use the dotfiles in this repo.
 
+### `rbenv` Setup
+
+[rbenv](https://github.com/rbenv/rbenv) is a version manager that lets you easily install and switch between multiple versions of Ruby.
+
+1. Install `rbenv` using the [Basic GitHub Checkout](https://github.com/rbenv/rbenv#basic-github-checkout) instructions:
+
+   ```sh
+   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+   ```
+
+2. Optionally, try to compile dynamic bash extension to speed up rbenv. Don't worry if it fails; rbenv will still work normally:
+
+   ```
+   cd ~/.rbenv && src/configure && make -C src
+   ```
+
+3. Install [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin that lets you easily manage and automatically activate virtualenvs:
+
+   ```sh
+   git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+   ```
+
+4. Install [dependencies](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) for building python:
+
+   ```sh
+   # dependencies for building python on Mac with Homebrew
+   brew install openssl readline sqlite3 xz zlib
+   
+   # dependencies for building python on Mac with MacPorts
+   sudo port install openssl readline sqlite3 xz zlib
+   
+   # dependencies for building python in Ubuntu Linux
+   sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   ```
+
 ### `pyenv` Setup
 
 [pyenv](https://github.com/pyenv/pyenv) is a [rbenv](https://github.com/rbenv/rbenv)-style version manager that lets you easily install and switch between multiple versions of Python.

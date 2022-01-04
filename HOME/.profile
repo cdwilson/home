@@ -113,6 +113,24 @@ if executable_exists brew; then
 fi
 
 # ------------------------------------------------------------------------------
+# rbenv
+# ------------------------------------------------------------------------------
+
+# Manually set RBENV_ROOT for rbenv installed manually via Basic GitHub Checkout
+# https://github.com/rbenv/rbenv#basic-github-checkout
+export RBENV_ROOT="${HOME}/.rbenv"
+
+if [ -d "${RBENV_ROOT}" ]; then
+    export PATH="${RBENV_ROOT}/bin:${PATH}"
+    # Don't use `rbenv init` because it doesn't support --path like pyenv does.
+    # Instead, just set PATH manually here and do the rest of the shell
+    # initialization in the interactive initialization file (e.g. ~/.bashrc).
+    # rbenv_init_path=$(rbenv init -)
+    # eval "${rbenv_init_path}"
+    export PATH="${RBENV_ROOT}/shims:${PATH}"
+fi
+
+# ------------------------------------------------------------------------------
 # pyenv
 # ------------------------------------------------------------------------------
 
