@@ -133,5 +133,11 @@ export VAGRANT_VMWARE_CLONE_DIRECTORY="${HOME}/Virtual Machines"
 # User paths
 # ------------------------------------------------------------------------------
 
-export PATH="${HOME}/bin:${PATH}"
-export PATH="${HOME}/.local/bin:${PATH}"
+# copied from Ubuntu .profile
+if [ -d "${HOME}/bin" ] ; then
+    export PATH="${HOME}/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.local/bin" ] ; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+fi
