@@ -193,28 +193,11 @@ fi
 # rbenv
 # ------------------------------------------------------------------------------
 if [[ -n "${RBENV_ROOT}" ]] && [[ -d "${RBENV_ROOT}" ]]; then
-    # Don't use `rbenv init -` because it sets the PATH. Instead, just do the
-    # rest of the shell initialization that `rbenv init -` would have done.
-    # rbenv_init_path=$(rbenv init -)
-    # eval "${rbenv_init_path}"
-    export RBENV_SHELL=bash
-    # shellcheck source=/dev/null
-    source "${RBENV_ROOT}/libexec/../completions/rbenv.bash"
-    command rbenv rehash 2>/dev/null
-    rbenv() {
-    local command
-    command="${1:-}"
-    if [ "$#" -gt 0 ]; then
-        shift
-    fi
-
-    case "$command" in
-    rehash|shell)
-        eval "$(rbenv "sh-$command" "$@")";;
-    *)
-        command rbenv "$command" "$@";;
-    esac
-    }
+    # Don't use `rbenv init -` directly because it sets the PATH. Instead,
+    # remove any lines that set the PATH and then eval.
+    rbenv_init=$(rbenv init -)
+    rbenv_init_no_path=$(sed '/export PATH/d' <<< "${rbenv_init}")
+    eval "${rbenv_init_no_path}"
 fi
 
 # ------------------------------------------------------------------------------
