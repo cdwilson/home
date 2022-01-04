@@ -151,25 +151,26 @@ The instructions below detail the additional system setup and dependencies requi
    cd ~/.rbenv && src/configure && make -C src
    ```
 
-3. Install [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin that lets you easily manage and automatically activate virtualenvs:
+3. Install [ruby-build](https://github.com/rbenv/ruby-build) plugin that lets you easily install Ruby versions:
 
    ```sh
-   git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+   mkdir -p "$(rbenv root)"/plugins
+   git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
    ```
 
-4. Install [dependencies](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) for building python:
+4. Install [dependencies](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment) for building Ruby:
 
    ```sh
-   # dependencies for building python on Mac with Homebrew
-   brew install openssl readline sqlite3 xz zlib
+   # dependencies for building ruby on Mac with Homebrew
+   brew install openssl readline
    
-   # dependencies for building python on Mac with MacPorts
-   sudo port install openssl readline sqlite3 xz zlib
+   # dependencies for building ruby on Mac with MacPorts
+   sudo port install openssl readline
    
-   # dependencies for building python in Ubuntu Linux
-   sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
-   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   # dependencies for building ruby in Ubuntu Linux
+   # Depending on your version of Ubuntu, libgdbm6 won't be available.
+   # In that case, try an earlier version such as libgdbm5.
+   apt-get install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
    ```
 
 ### `pyenv` Setup
