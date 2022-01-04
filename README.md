@@ -260,10 +260,6 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
 
    ![ubuntu_custom_font](images/ubuntu_custom_font.png)
 
-4. Make sure to configure the GNOME Terminal preferences so that shells open as a login shell:
-
-   ![ubuntu_login_shell](images/ubuntu_login_shell.png)
-   
 5. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
 
    ```sh
