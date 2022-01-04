@@ -31,8 +31,8 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
     # via MacPorts for Mac
     sudo port install stow git
     
-    # via apt-get for Ubuntu Linux
-    sudo apt-get install stow git curl
+    # via apt for Ubuntu Linux
+    sudo apt install stow git curl
     ```
 
 2. Change to `$HOME` directory
@@ -170,7 +170,7 @@ The instructions below detail the additional system setup and dependencies requi
    # dependencies for building ruby in Ubuntu Linux
    # Depending on your version of Ubuntu, libgdbm6 won't be available.
    # In that case, try an earlier version such as libgdbm5.
-   apt-get install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
+   apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
    ```
 
 ### `pyenv` Setup
@@ -205,7 +205,7 @@ The instructions below detail the additional system setup and dependencies requi
    sudo port install openssl readline sqlite3 xz zlib
    
    # dependencies for building python in Ubuntu Linux
-   sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+   sudo apt update; sudo apt install make build-essential libssl-dev zlib1g-dev \
    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
    ```
