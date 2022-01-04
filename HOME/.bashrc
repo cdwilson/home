@@ -160,14 +160,14 @@ alias stree='/Applications/SourceTree.app/Contents/Resources/stree'
 # Homebrew Bash Completion
 # ------------------------------------------------------------------------------
 
-if executable_exists brew; then
+if [[ -n "${HOMEBREW_PREFIX}" ]] && [[ -d "${HOMEBREW_PREFIX}" ]]; then
     # bash version check code copied from `starship init bash`
     major="${BASH_VERSINFO[0]}"
     minor="${BASH_VERSINFO[1]}"
     if ((major > 4)) || { ((major == 4)) && ((minor >= 2)); }; then
         # Make sure you add this after any PATH manipulation as otherwise the
         # bash-completion will not work correctly.
-        if [[ -r "${HOMEBREW_PREFIX:?}/etc/profile.d/bash_completion.sh" ]]
+        if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
         then
             # shellcheck source=/dev/null
             . "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
@@ -193,9 +193,7 @@ fi
 # pyenv
 # ------------------------------------------------------------------------------
 
-# At this point, the `pyenv` function may not have been defined yet and only the
-# executable exists in the $PATH, so use `executable_exists`
-if executable_exists pyenv; then
+if [[ -n "${PYENV_ROOT}" ]] && [[ -d "${PYENV_ROOT}" ]]; then
     pyenv_init=$(pyenv init -)
     eval "${pyenv_init}"
 fi
@@ -204,8 +202,10 @@ fi
 # pyenv-virtualenv
 # ------------------------------------------------------------------------------
 
-# Now, the pyenv function should exist, so use `function_exists`
-if function_exists pyenv; then
+if [[ -n "${PYENV_ROOT}" ]] && [[ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]]; then
+    # https://github.com/pyenv/pyenv-virtualenv#special-environment-variables
+    # export PYENV_VIRTUALENV_VERBOSE_ACTIVATE=1
+
     pyenv_virtualenv_init=$(pyenv virtualenv-init -)
     eval "${pyenv_virtualenv_init}"
 fi
