@@ -210,6 +210,24 @@ The instructions below detail the additional system setup and dependencies requi
    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
    ```
 
+### `pipx` Setup
+
+[pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
+
+```sh
+# via Homebrew for Mac
+brew install pipx
+pipx ensurepath
+
+# via MacPorts for Mac
+sudo port install pipx
+pipx ensurepath
+
+# via apt for Ubuntu Linux
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+```
+
 ### macOS Login Shell Setup
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.

@@ -177,11 +177,12 @@ export VAGRANT_VMWARE_CLONE_DIRECTORY="${HOME}/Virtual Machines"
 # User paths
 # ------------------------------------------------------------------------------
 
+# pipx exposes binaries in this directory
+if [ -d "${HOME}/.local/bin" ] ; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+fi
+
 # copied from Ubuntu .profile
 if [ -d "${HOME}/bin" ] ; then
     export PATH="${HOME}/bin:${PATH}"
-fi
-
-if [ -d "${HOME}/.local/bin" ] ; then
-    export PATH="${HOME}/.local/bin:${PATH}"
 fi
