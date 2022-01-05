@@ -217,8 +217,11 @@ if [[ -n "${PYENV_ROOT}" ]] && [[ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]]
     # https://github.com/pyenv/pyenv-virtualenv#special-environment-variables
     # export PYENV_VIRTUALENV_VERBOSE_ACTIVATE=1
 
+    # Don't use `pyenv virtualenv-init -` directly because it sets the PATH.
+    # Instead, remove any lines that set the PATH and then eval.
     pyenv_virtualenv_init=$(pyenv virtualenv-init -)
-    eval "${pyenv_virtualenv_init}"
+    pyenv_virtualenv_init_no_path=$(sed '/export PATH/d' <<< "${pyenv_virtualenv_init}")
+    eval "${pyenv_virtualenv_init_no_path}"
 fi
 
 # ------------------------------------------------------------------------------

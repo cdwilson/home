@@ -145,6 +145,19 @@ if [ -d "${PYENV_ROOT}" ]; then
 fi
 
 # ------------------------------------------------------------------------------
+# pyenv-virtualenv
+# ------------------------------------------------------------------------------
+
+if [ -n "${PYENV_ROOT}" ] && [ -d "${PYENV_ROOT}/plugins/pyenv-virtualenv" ]; then
+    # Don't use `pyenv virtualenv-init -` directly because it doesn't support
+    # --path like pyenv does. Instead, remove any lines that don't set the PATH
+    # and then eval. Then, do the rest of the shell initialization in the
+    # interactive initialization file (e.g. ~/.bashrc).
+    pyenv_virtualenv_init_path=$(pyenv virtualenv-init - | sed '/export PATH/!d')
+    eval "${pyenv_virtualenv_init_path}"
+fi
+
+# ------------------------------------------------------------------------------
 # Rust/Cargo
 # ------------------------------------------------------------------------------
 
