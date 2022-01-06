@@ -2,7 +2,7 @@
 typora-copy-images-to: ./images
 ---
 
-# home
+# :house: home
 
 Version control and automatic management of user files in `$HOME`
 
@@ -131,11 +131,11 @@ There is a Git `post-commit` installed by `setup.sh` to run Stow automatically a
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
-## System Setup
+## :computer: System Setup
 
 The instructions below detail the additional system setup required to use the dotfiles in this repo on macOS and Ubuntu Linux.
 
-###  macOS Setup
+### :apple: macOS Setup
 
 #### Homebrew Setup
 
@@ -282,7 +282,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
 
 5. To use the Terminal.app profile shown in the photo above, just double click the [terminal/cdwilson.terminal](terminal/cdwilson.terminal) file in Finder.
 
-### 🐧 Ubuntu Linux Setup
+### :penguin: Ubuntu Linux Setup
 
 #### `apt` Setup
 
