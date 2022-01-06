@@ -218,6 +218,14 @@ Install Homebrew:
 brew install pipx
 ```
 
+#### `direnv` Setup
+
+[direnv](https://direnv.net/) lets you easily load and unload environment variables depending on the current directory.
+
+```sh
+brew install direnv
+```
+
 #### Login Shell Setup
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
@@ -357,6 +365,14 @@ sudo apt update
 
 ```sh
 python3 -m pip install --user pipx
+```
+
+#### `direnv` Setup
+
+[direnv](https://direnv.net/) lets you easily load and unload environment variables depending on the current directory.
+
+```sh
+sudo apt install direnv
 ```
 
 #### GNOME Terminal Setup

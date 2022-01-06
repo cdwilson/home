@@ -261,3 +261,9 @@ if executable_exists starship; then
     starship_init_bash=$(starship init bash)
     eval "${starship_init_bash}"
 fi
+
+# ------------------------------------------------------------------------------
+# direnv
+# ------------------------------------------------------------------------------
+
+eval "$(direnv hook bash)"
