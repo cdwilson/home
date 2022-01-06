@@ -131,104 +131,94 @@ There is a Git `post-commit` installed by `setup.sh` to run Stow automatically a
 
 If for some reason you need to update the symlinks in `$HOME` without actually committing anything to the repository, running `update.sh` runs the same stow commands as the git `post-commit` hook, prompting whether or not to bypass adopting files from `$HOME`.  Any arguments passed to `update.sh` are passed to the internal stow commands (e.g. to display stow action details, run `./update.sh --verbose`)
 
-## System Setup & Dependencies
+## System Setup
 
-The instructions below detail the additional system setup and dependencies required to use the dotfiles in this repo.
+The instructions below detail the additional system setup required to use the dotfiles in this repo on macOS and Ubuntu Linux.
 
-### `rbenv` Setup
+###  macOS Setup
+
+#### Homebrew Setup
+
+[Homebrew](https://brew.sh/) is a package manager for macOS that can be used to install packages that aren't included by Apple.
+
+Install Homebrew:
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+#### `rbenv` Setup
 
 [rbenv](https://github.com/rbenv/rbenv) is a version manager that lets you easily install and switch between multiple versions of Ruby.
 
-1. Install `rbenv` using the [Basic GitHub Checkout](https://github.com/rbenv/rbenv#basic-github-checkout) instructions:
+1. Install dependencies for building Ruby:
+
+   ```sh
+   brew install openssl readline
+   ```
+
+2. Install `rbenv` using the [Basic GitHub Checkout](https://github.com/rbenv/rbenv#basic-github-checkout) instructions (I'm not using [rbenv-installer](https://github.com/rbenv/rbenv-installer) because I don't want rbenv installed via Homebrew on macOS):
 
    ```sh
    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
    ```
 
-2. Optionally, try to compile dynamic bash extension to speed up rbenv. Don't worry if it fails; rbenv will still work normally:
+3. Optionally, try to compile dynamic bash extension to speed up rbenv. Don't worry if it fails; rbenv will still work normally:
 
    ```
    cd ~/.rbenv && src/configure && make -C src
    ```
 
-3. Install [ruby-build](https://github.com/rbenv/ruby-build) plugin that lets you easily install Ruby versions:
+4. Install [ruby-build](https://github.com/rbenv/ruby-build) plugin that lets you easily install Ruby versions:
 
    ```sh
    mkdir -p "$(rbenv root)"/plugins
    git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
    ```
 
-4. Install [dependencies](https://github.com/rbenv/ruby-build/wiki#suggested-build-environment) for building Ruby:
+5. Verify the state of your rbenv installation:
 
    ```sh
-   # dependencies for building ruby on Mac with Homebrew
-   brew install openssl readline
-   
-   # dependencies for building ruby on Mac with MacPorts
-   sudo port install openssl readline
-   
-   # dependencies for building ruby in Ubuntu Linux
-   # Depending on your version of Ubuntu, libgdbm6 won't be available.
-   # In that case, try an earlier version such as libgdbm5.
-   apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
+   curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-doctor | bash
    ```
 
-### `pyenv` Setup
+#### `pyenv` Setup
 
 [pyenv](https://github.com/pyenv/pyenv) is a [rbenv](https://github.com/rbenv/rbenv)-style version manager that lets you easily install and switch between multiple versions of Python.
 
-1. Install `pyenv` using the [Basic GitHub Checkout](https://github.com/pyenv/pyenv#basic-github-checkout) instructions:
+1. Install dependencies for building Python:
 
    ```sh
-   git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+   brew install openssl readline sqlite3 xz zlib
    ```
 
-2. Optionally, try to compile a dynamic Bash extension to speed up Pyenv. Don't worry if it fails; Pyenv will still work normally:
+2. Install `pyenv` using [pyenv-installer](https://github.com/pyenv/pyenv-installer):
+
+   ```sh
+   curl https://pyenv.run | bash
+   ```
+
+3. Optionally, try to compile a dynamic Bash extension to speed up Pyenv. Don't worry if it fails; Pyenv will still work normally:
 
    ```
    cd ~/.pyenv && src/configure && make -C src
    ```
-   
-2. Install [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv) plugin that lets you easily manage and automatically activate virtualenvs:
+
+3. Verify the state of your pyenv installation:
 
    ```sh
-   git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
-   ```
-   
-4. Install [dependencies](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) for building python:
-
-   ```sh
-   # dependencies for building python on Mac with Homebrew
-   brew install openssl readline sqlite3 xz zlib
-   
-   # dependencies for building python on Mac with MacPorts
-   sudo port install openssl readline sqlite3 xz zlib
-   
-   # dependencies for building python in Ubuntu Linux
-   sudo apt update; sudo apt install make build-essential libssl-dev zlib1g-dev \
-   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   pyenv doctor
    ```
 
-### `pipx` Setup
+#### `pipx` Setup
 
 [pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
 
 ```sh
-# via Homebrew for Mac
 brew install pipx
-pipx ensurepath
-
-# via MacPorts for Mac
-sudo port install pipx
-pipx ensurepath
-
-# via apt for Ubuntu Linux
-python3 -m pip install --user pipx
-python3 -m pipx ensurepath
 ```
 
-### macOS Login Shell Setup
+#### Login Shell Setup
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
 
@@ -257,7 +247,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
    /opt/homebrew/bin/bash <-- Add your shell here
    ```
 
-### macOS Terminal Setup
+#### Terminal.app Setup
 
 ![macos_terminal](images/macos_terminal.png)
 
@@ -266,9 +256,6 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
    ```sh
    # via Homebrew for Mac
    brew install starship
-   
-   # via MacPorts for Mac
-   sudo port install starship
    ```
 
 2. To get started [configuring starship](https://starship.rs/config/#prompt), add your changes to `~/.config/starship.toml`
@@ -279,9 +266,6 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
    # via Homebrew for Mac
    brew tap homebrew/cask-fonts
    brew install --cask font-hasklug-nerd-font
-   
-   # there is no MacPorts port for Mac, so install manually from
-   # https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hasklig.zip
    ```
 
 4. Make sure to configure the macOS Terminal.app preferences so that shells open with the default login shell:
@@ -290,7 +274,92 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
 
 5. To use the Terminal.app profile shown in the photo above, just double click the [terminal/cdwilson.terminal](terminal/cdwilson.terminal) file in Finder.
 
-### Ubuntu Linux GNOME Terminal Setup
+### 🐧 Ubuntu Linux Setup
+
+#### `apt` Setup
+
+Update package information:
+
+```sh
+sudo apt update
+```
+
+#### `rbenv` Setup
+
+[rbenv](https://github.com/rbenv/rbenv) is a version manager that lets you easily install and switch between multiple versions of Ruby.
+
+1. Install dependencies for building Ruby:
+
+   ```sh
+   # Depending on your version of Ubuntu, libgdbm6 won't be available.
+   # In that case, try an earlier version such as libgdbm5.
+   sudo apt install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev
+   ```
+
+2. Install `rbenv` using the [Basic GitHub Checkout](https://github.com/rbenv/rbenv#basic-github-checkout) instructions (I'm not using [rbenv-installer](https://github.com/rbenv/rbenv-installer) because I don't want rbenv installed via Homebrew on macOS):
+
+   ```sh
+   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+   ```
+
+3. Optionally, try to compile dynamic bash extension to speed up rbenv. Don't worry if it fails; rbenv will still work normally:
+
+   ```
+   cd ~/.rbenv && src/configure && make -C src
+   ```
+
+4. Install [ruby-build](https://github.com/rbenv/ruby-build) plugin that lets you easily install Ruby versions:
+
+   ```sh
+   mkdir -p "$(rbenv root)"/plugins
+   git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+   ```
+
+5. Verify the state of your rbenv installation:
+
+   ```sh
+   curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-doctor | bash
+   ```
+
+#### `pyenv` Setup
+
+[pyenv](https://github.com/pyenv/pyenv) is a [rbenv](https://github.com/rbenv/rbenv)-style version manager that lets you easily install and switch between multiple versions of Python.
+
+1. Install dependencies for building Python:
+
+   ```sh
+   sudo apt install make build-essential libssl-dev zlib1g-dev \
+   libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+   libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+   ```
+
+2. Install `pyenv` using [pyenv-installer](https://github.com/pyenv/pyenv-installer):
+
+   ```sh
+   curl https://pyenv.run | bash
+   ```
+
+3. Optionally, try to compile a dynamic Bash extension to speed up Pyenv. Don't worry if it fails; Pyenv will still work normally:
+
+   ```
+   cd ~/.pyenv && src/configure && make -C src
+   ```
+
+3. Verify the state of your pyenv installation:
+
+   ```sh
+   pyenv doctor
+   ```
+
+#### `pipx` Setup
+
+[pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
+
+```sh
+python3 -m pip install --user pipx
+```
+
+#### GNOME Terminal Setup
 
 ![ubuntu_terminal](images/ubuntu_terminal.png)
 
@@ -299,7 +368,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
    ```sh
    sh -c "$(curl -fsSL https://starship.rs/install.sh)"
    ```
-   
+
 2. To get started [configuring starship](https://starship.rs/config/#prompt), add your changes to `~/.config/starship.toml`
 
 3. To use the [Hasklig](https://github.com/i-tu/Hasklig) font shown in the photo above, make sure to install the patched "Hasklug" version from [Nerd Fonts](https://www.nerdfonts.com/#home) (Starship uses many of the icons in Nerd Fonts version):
@@ -316,7 +385,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
 
    ![ubuntu_custom_font](images/ubuntu_custom_font.png)
 
-5. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
+4. To use the GNOME Terminal profile colors shown in the photo above, install https://github.com/aarowill/base16-gnome-terminal:
 
    ```sh
    git clone https://github.com/aaron-williamson/base16-gnome-terminal.git ~/.config/base16-gnome-terminal
