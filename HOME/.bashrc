@@ -266,5 +266,7 @@ fi
 # direnv
 # ------------------------------------------------------------------------------
 
-direnv_hook_bash=$(direnv hook bash)
-eval "${direnv_hook_bash}"
+if executable_exists direnv; then
+    direnv_hook_bash=$(direnv hook bash)
+    eval "${direnv_hook_bash}"
+fi
