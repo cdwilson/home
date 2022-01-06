@@ -266,4 +266,5 @@ fi
 # direnv
 # ------------------------------------------------------------------------------
 
-eval "$(direnv hook bash)"
+direnv_hook_bash=$(direnv hook bash)
+eval "${direnv_hook_bash}"
