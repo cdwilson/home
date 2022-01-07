@@ -210,20 +210,20 @@ Install Homebrew:
    pyenv doctor
    ```
 
-#### `pipx` Setup
-
-[pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
-
-```sh
-brew install pipx
-```
-
 #### `direnv` Setup
 
 [direnv](https://direnv.net/) lets you easily load and unload environment variables depending on the current directory.
 
 ```sh
 brew install direnv
+```
+
+#### `pipx` Setup
+
+[pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
+
+```sh
+brew install pipx
 ```
 
 #### Login Shell Setup
@@ -359,20 +359,20 @@ sudo apt update
    pyenv doctor
    ```
 
-#### `pipx` Setup
-
-[pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
-
-```sh
-python3 -m pip install --user pipx
-```
-
 #### `direnv` Setup
 
 [direnv](https://direnv.net/) lets you easily load and unload environment variables depending on the current directory.
 
 ```sh
 sudo apt install direnv
+```
+
+#### `pipx` Setup
+
+[pipx](https://pypa.github.io/pipx/) lets you easily install and run Python applications in isolated environments.
+
+```sh
+sudo apt install pipx
 ```
 
 #### GNOME Terminal Setup

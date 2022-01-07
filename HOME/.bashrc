@@ -193,8 +193,14 @@ fi
 # pipx
 # ------------------------------------------------------------------------------
 if executable_exists pipx; then
-    pipx_completions=$(register-python-argcomplete pipx)
-    eval "${pipx_completions}"
+    if executable_exists register-python-argcomplete; then
+        pipx_completions=$(register-python-argcomplete pipx)
+    elif executable_exists register-python-argcomplete3; then
+        pipx_completions=$(register-python-argcomplete3 pipx)
+    fi
+    if [[ -n "${pipx_completions}" ]]; then
+        eval "${pipx_completions}"
+    fi
 fi
 
 # ------------------------------------------------------------------------------
