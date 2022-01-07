@@ -1,3 +1,13 @@
+[includeIf "gitdir:/Users/"]
+    path = ~/.gitconfigs/macos.gitconfig
+[includeIf "gitdir:C:/"]
+    path = ~/.gitconfigs/windows.gitconfig
+[includeIf "gitdir:/home/"]
+    path = ~/.gitconfigs/linux.gitconfig
+[includeIf "gitdir:~/Flying_Camp_Design/"]
+	path = ~/.gitconfigs/flying_camp_design.gitconfig
+[includeIf "gitdir:~/Tempo_Automation/"]
+	path = ~/.gitconfigs/tempo_automation.gitconfig
 [user]
 	name = Chris Wilson
 	email = christopher.david.wilson@gmail.com
@@ -24,18 +34,6 @@
 	sdiff = !git diff && git submodule foreach 'git diff'
 	spush = push --recurse-submodules=on-demand
 	supdate = submodule update --remote --merge
-[merge]
-	tool = Kaleidoscope
-	summary = true
-[diff]
-	tool = Kaleidoscope
-	submodule = log
-[difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
 [color "diff"]
 	whitespace = red reverse
 [instaweb]
@@ -44,13 +42,8 @@
 [push]
 	default = simple
 	recurseSubmodules = check
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
 [mergetool]
 	prompt = false
 [filter "media"]
@@ -63,10 +56,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[includeIf "gitdir:~/Flying_Camp_Design/"]
-	path = ~/.gitconfigs/flying_camp_design.gitconfig
-[includeIf "gitdir:~/Tempo_Automation/"]
-	path = ~/.gitconfigs/tempo_automation.gitconfig
 [status]
 	submodulesummary = 1
 [submodule]
