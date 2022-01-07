@@ -226,6 +226,18 @@ brew install direnv
 brew install pipx
 ```
 
+#### `pre-commit` Setup
+
+[pre-commit](https://pre-commit.com/) is a framework for managing git pre-commit hooks.
+
+```sh
+pipx install pre-commit
+
+# automatically enabling pre-commit on repositories
+# https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories
+pre-commit init-templatedir ~/.git-template
+```
+
 #### Login Shell Setup
 
 On macOS, if you're using a custom shell installed via Homebrew or MacPorts, remember to configure the login shell in the system preferences.
@@ -373,6 +385,18 @@ sudo apt install direnv
 
 ```sh
 sudo apt install pipx
+```
+
+#### `pre-commit` Setup
+
+[pre-commit](https://pre-commit.com/) is a framework for managing git pre-commit hooks.
+
+```sh
+pipx install pre-commit
+
+# automatically enabling pre-commit on repositories
+# https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories
+pre-commit init-templatedir ~/.git-template
 ```
 
 #### GNOME Terminal Setup

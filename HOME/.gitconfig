@@ -77,5 +77,6 @@
 	defaultBranch = main
 [init]
 	defaultBranch = main
+	templateDir = /Users/chris/.git-template
 [fetch]
 	prune = true
