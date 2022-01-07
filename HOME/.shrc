@@ -22,7 +22,7 @@ unset PROMPT_COMMAND
 # Opening a terminal from the menu or shortcut [crtl-alt-t] provides interactive
 # bash. A script run from the desktop or file manager, through the dialogue 'run
 # in terminal' will execute as POSIX dash.  See
-# https://wiki.ubuntu.com/DashAsBinSh for more details.  
+# https://wiki.ubuntu.com/DashAsBinSh for more details.
 #
 # If an interactive shell is invoked as sh from an existing interactive bash
 # shell, PS1 will be inherited in the environment.  If the starship prompt was

@@ -27,10 +27,10 @@ Obviously, you probably don't want to use my personal files "as is" on your own 
     ```bash
     # via Homebrew for Mac
     brew install stow git
-    
+
     # via MacPorts for Mac
     sudo port install stow git
-    
+
     # via apt for Ubuntu Linux
     sudo apt install stow git curl
     ```
@@ -96,7 +96,7 @@ Now that everything has been set up, keeping the files in `$HOME` revision contr
 
   ![usage](images/usage.png)
 
-  
+
 
 
 ## How it works
@@ -244,7 +244,7 @@ On macOS, if you're using a custom shell installed via Homebrew or MacPorts, rem
    # List of acceptable shells for chpass(1).
    # Ftpd will not allow users to connect who are not using
    # one of these shells.
-   
+
    /bin/bash
    /bin/csh
    /bin/dash
