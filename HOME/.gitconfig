@@ -3,7 +3,7 @@
 	email = christopher.david.wilson@gmail.com
 [core]
 	editor = code --wait
-	excludesfile = /Users/chris/.gitignore
+	excludesfile = ~/.gitignore
 	quotepath = false
 [color]
 	diff = auto
@@ -57,7 +57,7 @@
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
 [commit]
-	template = /Users/chris/.stCommitMsg
+	template = ~/.stCommitMsg
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -77,6 +77,6 @@
 	defaultBranch = main
 [init]
 	defaultBranch = main
-	templateDir = /Users/chris/.git-template
+	templateDir = ~/.git-template
 [fetch]
 	prune = true
