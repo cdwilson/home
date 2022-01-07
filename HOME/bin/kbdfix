@@ -1,5 +1,7 @@
 #!/usr/bin/expect
 
+# Fix for telnet hosts with broken backspace
+# https://web.archive.org/web/20181021233554/http://www.ibb.net/~anne/keyboard/keyboard.html
 # www.ibb.net/~anne/keyboard.html
 # Name this file as kbdfix and make it executable in your path
 # Run it as 'kbdfix telnet <brokenhost>'
@@ -7,6 +9,6 @@
 eval spawn -noecho $argv
 
 interact {
- \177        {send "\010"}
- "\033\[3~"  {send "\177"}
+    \177        {send "\010"}
+    "\033\[3~"  {send "\177"}
 }

@@ -1,6 +1,7 @@
-#!/bin/bash -e
+#!/bin/sh -e
 
-if [ `whoami` = root ]; then
+whoami=$(whoami)
+if [ "${whoami}" = root ]; then
   USE_SUDO=""
 else
   USE_SUDO="sudo "
@@ -8,14 +9,18 @@ fi
 
 case "$1" in
 'start')
-  ${USE_SUDO}launchctl load -F /System/Library/LaunchDaemons/tftp.plist
-  ${USE_SUDO}launchctl start com.apple.tftpd
+  "${USE_SUDO}"launchctl load -F /System/Library/LaunchDaemons/tftp.plist
+  "${USE_SUDO}"launchctl start com.apple.tftpd
   echo "tftpserver started..."
   ;;
 'stop')
-  ${USE_SUDO}launchctl stop com.apple.tftpd
-  ${USE_SUDO}launchctl unload /System/Library/LaunchDaemons/tftp.plist
+  "${USE_SUDO}"launchctl stop com.apple.tftpd
+  "${USE_SUDO}"launchctl unload /System/Library/LaunchDaemons/tftp.plist
   echo "tftpserver stopped..."
+  ;;
+*)
+  >&2 echo "ERROR: unsupported command: $1"
+  exit 1
   ;;
 esac
 exit 0

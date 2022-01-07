@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if [[ $(mount | awk '$3 == "/Volumes/Magneto" {print $3}') != "" ]]; then
-  rsync -av --delete --exclude='.DS_Store' /Users/cwilson/iTunes/iTunes\ Media/Audiobooks /Volumes/Magneto/Archive/
-fi
