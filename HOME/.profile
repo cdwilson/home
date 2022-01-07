@@ -19,8 +19,8 @@ fi
 # Source shell functions
 # ------------------------------------------------------------------------------
 
-if [ -r "${HOME}/.shell_functions" ]; then
-    . "${HOME}/.shell_functions"
+if [ -r "${HOME}/.sh_functions" ]; then
+    . "${HOME}/.sh_functions"
 fi
 
 # ------------------------------------------------------------------------------
