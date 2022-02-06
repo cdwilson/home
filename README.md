@@ -2,6 +2,9 @@
 typora-copy-images-to: ./images
 ---
 
+| ⚠️ I've switched to using [chezmoi](https://www.chezmoi.io/) to manage my [dotfiles](https://github.com/cdwilson/dotfiles) |
+| --- |
+
 # :house: home
 
 Version control and automatic management of user files in `$HOME`
